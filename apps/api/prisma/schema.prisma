@@ -18,6 +18,7 @@ model User {
   avatar          String?
   discordUsername String?
   discordId       String? @unique
+  bio             String? @db.VarChar(1000)
 }
 
 model Session {

@@ -16,6 +16,7 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { IsAuthenticatedGuard } from 'src/auth/guards/is-authenticated.guard'
 import { Request } from 'express'
 import { User } from '@prisma/client'
+import { UpdateUserBioDto } from './dto/update-user-bio.dto'
 
 @Controller('users')
 export class UsersController {
@@ -52,5 +53,15 @@ export class UsersController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this._usersService.remove(id)
+  }
+
+  @UseGuards(IsAuthenticatedGuard)
+  @Post('/update')
+  async updateUserBio(@Body() updateUserBioDto: UpdateUserBioDto) {
+    try {
+      return await this._usersService.updateUserBio(updateUserBioDto)
+    } catch (error) {
+      throw new NotFoundException()
+    }
   }
 }
