@@ -31,7 +31,6 @@ export class UsersController {
   @Post('/me')
   @UseGuards(IsAuthenticatedGuard)
   async me(@Req() request: Request) {
-    console.log('THIS IS IN SESSION', request.session)
     const reqUser = request.user as Omit<User, 'password'>
     return await this._usersService.findById(reqUser.id)
   }
