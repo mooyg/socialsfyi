@@ -6,14 +6,14 @@ import * as Tabs from '@radix-ui/react-tabs'
 export default function Dashboard() {
   return (
     <>
-      <div className="flex justify-center items-center h-screen ">
-        <div className="flex flex-col space-x-2 space-y-2  bg-secondary-background p-2 border border-button-background rounded-lg w-[500px]">
+      <div className="flex justify-center items-center h-screen">
+        <div className="flex flex-col space-x-2 space-y-2  bg-secondary-background p-8 border border-button-background rounded-3xl w-[500px]">
           <div className="flex space-x-2 m-1">
             <p className="font-bold text-4xl ">Welcome </p>
             <p className="font-bold text-4xl text-button-background"> mooy!</p>
           </div>
           <Tabs.Root defaultValue="customise-tab">
-            <Tabs.List className="bg-button-background bg-opacity-10 border border-button-background p-2 space-x-2 rounded-lg">
+            <Tabs.List className="bg-button-background bg-opacity-10 border border-button-background p-2 space-x-2 rounded-xl ">
               <Tabs.Trigger
                 value="customise-tab"
                 className="p-2 font-bold data-[state=active]:bg-black data-[state=active]:rounded-lg data-[state=active]:p-2 data-[state=active]:bg-opacity-40"

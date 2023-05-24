@@ -8,7 +8,7 @@ export function CustomiseTab() {
         <h2 className="animate-text bg-gradient-to-r from-white  to-button-background bg-clip-text text-transparent text-2xl font-black">
           Start Customising your card
         </h2>
-        <div className="flex flex-col">
+        <div className="flex flex-col space-y-2">
           <label className="text-md font-bold">Profile Picture</label>
           <Popover.Root>
             <Popover.Trigger className="cursor-pointer" asChild>
@@ -69,11 +69,10 @@ export function CustomiseTab() {
               </Popover.Content>
             </Popover.Portal>
           </Popover.Root>
-        </div>
-        <div className="flex flex-col">
           <label className="text-md font-bold">Bio</label>
           <textarea className="p-2 bg-button-background font-semibold text-sm bg-opacity-10 appearance-none inline-flex items-center justify-center rounded-md outline-none box-border  selection:color-white resize-none" />
         </div>
+
         <button className="bg-button-background bg-opacity-10 w-fit p-2 rounded-md border border-button-background font-extrabold px-10">
           Save
         </button>
