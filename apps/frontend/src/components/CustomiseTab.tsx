@@ -11,8 +11,8 @@ export function CustomiseTab() {
         <div className="flex flex-col">
           <label className="text-md font-bold">Profile Picture</label>
           <Popover.Root>
-            <Popover.Trigger asChild>
-              <Avatar.Root className="bg-blackA3 inline-flex h-20 w-20 select-none items-center justify-center overflow-hidden rounded-full align-middle hover:opacity-50   ">
+            <Popover.Trigger className="cursor-pointer" asChild>
+              <Avatar.Root className=" inline-flex h-20 w-20 select-none items-center justify-center overflow-hidden rounded-full align-middle hover:opacity-50   ">
                 <Avatar.Image
                   className="h-full w-full rounded-[inherit] object-cover"
                   src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
@@ -26,20 +26,26 @@ export function CustomiseTab() {
             <Popover.Portal>
               <Popover.Content
                 sideOffset={5}
-                className="bg-[#BC63DE] border border-black  rounded-lg p-2"
+                className="bg-[#BC63DE] border-2 border-black  rounded-lg p-2"
               >
-                <input type="file" className="font-bold" />
+                <div className="flex flex-col">
+                  <label className="font-bold cursor-pointer">
+                    Choose the profile picture
+                    <input type="file" className="hidden" />
+                  </label>
+                </div>
+
                 <Popover.Arrow className="fill-white" />
               </Popover.Content>
             </Popover.Portal>
           </Popover.Root>
           <label className="text-md font-bold">Profile Banner</label>
           <Popover.Root>
-            <Popover.Trigger asChild>
-              <Avatar.Root className="bg-blackA3 inline-flex h-20 w-20 select-none items-center justify-center overflow-hidden rounded-full align-middle hover:opacity-50   ">
+            <Popover.Trigger className="cursor-pointer" asChild>
+              <Avatar.Root className="inline-flex h-20 select-none items-center justify-center overflow-hidden rounded-md align-middle hover:opacity-50">
                 <Avatar.Image
                   className="h-full w-full rounded-[inherit] object-cover"
-                  src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
+                  src="https://img.freepik.com/free-photo/purple-blue-wallpaper-with-colorful-swirl_1340-27545.jpg?w=740&t=st=1684947940~exp=1684948540~hmac=ed8571bcc0cae8119e54c3b87cd6da3922588336b9a2b8b94e92a1b7314cfab0"
                   alt="Colm Tuite"
                 />
                 <Avatar.Fallback className="text-button-background font-bold leading-1 flex h-full w-full items-center justify-center bg-white text-[15px]">
@@ -50,9 +56,15 @@ export function CustomiseTab() {
             <Popover.Portal>
               <Popover.Content
                 sideOffset={5}
-                className="bg-[#BC63DE] border border-black  rounded-lg p-2"
+                className="bg-[#BC63DE] border-2 border-black  rounded-lg p-2"
               >
-                <input type="file" className="font-bold" />
+                <div className="flex flex-col">
+                  <label className="font-bold cursor-pointer">
+                    Choose the profile banner
+                    <input type="file" className="hidden" />
+                  </label>
+                </div>
+
                 <Popover.Arrow className="fill-white" />
               </Popover.Content>
             </Popover.Portal>

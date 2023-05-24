@@ -7,10 +7,10 @@ export default function Dashboard() {
   return (
     <>
       <div className="flex justify-center items-center h-screen ">
-        <div className="flex flex-col space-x-2 bg-secondary-background p-2 border border-button-background rounded-lg w-[500px]">
-          <div className="flex space-x-2">
-            <p className="font-bold text-2xl ">Welcome </p>
-            <p className="font-bold text-2xl text-button-background"> mooy!</p>
+        <div className="flex flex-col space-x-2 space-y-2  bg-secondary-background p-2 border border-button-background rounded-lg w-[500px]">
+          <div className="flex space-x-2 m-1">
+            <p className="font-bold text-4xl ">Welcome </p>
+            <p className="font-bold text-4xl text-button-background"> mooy!</p>
           </div>
           <Tabs.Root defaultValue="customise-tab">
             <Tabs.List className="bg-button-background bg-opacity-10 border border-button-background p-2 space-x-2 rounded-lg">
