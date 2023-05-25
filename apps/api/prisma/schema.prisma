@@ -18,7 +18,14 @@ model User {
   avatar          String?
   discordUsername String?
   discordId       String? @unique
-  bio             String? @db.VarChar(1000)
+  Card            Card?
+}
+
+model Card {
+  id     String @id @default(uuid())
+  bio    String @db.VarChar(1000)
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }
 
 model Session {

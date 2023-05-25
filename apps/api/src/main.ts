@@ -6,9 +6,15 @@ import * as passport from 'passport'
 import { PrismaClient } from '@prisma/client'
 import { PrismaSessionStore } from '@quixo3/prisma-session-store'
 import { config } from 'dotenv'
+
 config()
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  app.enableCors({
+    credentials: true,
+    origin: 'http://localhost:3000',
+  })
+
   app.useGlobalPipes(new ValidationPipe())
   app.use(
     session({

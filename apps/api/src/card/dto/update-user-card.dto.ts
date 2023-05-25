@@ -1,12 +1,12 @@
 import { IsNotEmpty, IsString, Length } from 'class-validator'
 
-export class UpdateUserBioDto {
+export class UpdateUserCardDto {
   @IsString()
-  @Length(10, 10000)
   @IsNotEmpty()
-  bio: string
+  userId: string
 
-  @IsString()
   @IsNotEmpty()
-  id: string
+  @IsString()
+  @Length(10, 1000)
+  bio: string
 }

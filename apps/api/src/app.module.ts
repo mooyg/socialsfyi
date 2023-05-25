@@ -4,6 +4,7 @@ import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { UsersModule } from './users/users.module'
 import { PassportModule } from '@nestjs/passport'
+import { CardModule } from './card/card.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { PassportModule } from '@nestjs/passport'
     PassportModule.register({
       session: true,
     }),
+    CardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

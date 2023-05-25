@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common'
 import { CreateDiscordUserDto, CreateUserDto } from './dto/create-user.dto'
 import { PrismaService } from 'src/prisma'
 import { hash } from 'bcrypt'
-import { UpdateUserBioDto } from './dto/update-user-bio.dto'
 @Injectable()
 export class UsersService {
   constructor(private readonly _prisma: PrismaService) {}
@@ -13,6 +12,11 @@ export class UsersService {
         email: createUserDto.email,
         password: hashedPassword,
         username: createUserDto.username,
+        Card: {
+          create: {
+            bio: 'Your Bio',
+          },
+        },
       },
     })
     delete user.password
@@ -25,6 +29,11 @@ export class UsersService {
         email: createDiscordUserDto.email,
         discordId: createDiscordUserDto.discordId,
         discordUsername: createDiscordUserDto.discordUsername,
+        Card: {
+          create: {
+            bio: 'Your Bio',
+          },
+        },
       },
     })
     delete user.password
@@ -69,18 +78,5 @@ export class UsersService {
       },
     })
     return deletedUser
-  }
-
-  async updateUserBio(updateUserBioDto: UpdateUserBioDto) {
-    const user = await this._prisma.user.update({
-      where: {
-        id: updateUserBioDto.id,
-      },
-      data: {
-        bio: updateUserBioDto.bio,
-      },
-    })
-    delete user.password
-    return user
   }
 }
