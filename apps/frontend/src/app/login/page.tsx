@@ -52,6 +52,7 @@ export default function Login() {
               <input
                 type="email"
                 onChange={(e) => setEmail(e.target.value.trim())}
+                placeholder="Enter your email"
                 className="p-2 bg-button-background border border-button-background bg-opacity-10 outline-none rounded-lg text-sm font-semibold"
               />
             </Form.Control>
@@ -64,6 +65,7 @@ export default function Login() {
               <input
                 onChange={(e) => setPassword(e.target.value.trim())}
                 type="password"
+                placeholder="Enter your password"
                 className="p-2 bg-button-background border border-button-background bg-opacity-10 outline-none rounded-lg text-sm font-semibold"
               />
             </Form.Control>

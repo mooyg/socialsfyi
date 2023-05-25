@@ -7,6 +7,7 @@ export default async function Dashboard() {
   const token = cookies().get('connect.sid')
   const user = await getUser(token)
 
+  console.log(user)
   if (!user) {
     redirect('/login')
   }

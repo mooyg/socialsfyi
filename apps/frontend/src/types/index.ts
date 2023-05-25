@@ -17,4 +17,9 @@ export interface UserCard {
   id: string
   bio: string
   userId: string
+  passwordProtection: boolean
+  password: string
+  viewCount: number
+  viewCountEnabled: boolean
+  colorBackground: string
 }

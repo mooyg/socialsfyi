@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Card` MODIFY `viewCount` INTEGER NULL DEFAULT 0;

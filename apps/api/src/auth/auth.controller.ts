@@ -48,7 +48,6 @@ export class AuthController {
   @Get('/discord/callback')
   @UseGuards(AuthGuard('discord'))
   async discordAuthCallback(@Req() request: Request, @Res() response: Response) {
-    console.log(request.user)
-    response.redirect('http://localhost:8000')
+    response.redirect('http://localhost:3000/dashboard')
   }
 }

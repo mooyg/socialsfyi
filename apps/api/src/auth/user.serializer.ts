@@ -10,6 +10,7 @@ export class UserSerializer extends PassportSerializer {
   }
 
   serializeUser(user: User, done: Function) {
+    console.log('SERIALISED USER ', user)
     done(null, user)
   }
 

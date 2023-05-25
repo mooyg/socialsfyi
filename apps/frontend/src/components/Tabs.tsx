@@ -2,38 +2,41 @@
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { CustomiseTab } from '@/components/CustomiseTab'
 import { User } from '@/types'
+import { UploadsTabs } from './UploadsTab'
 
 interface Tabs {
   user: User | undefined
 }
 export function Tabs({ user }: Tabs) {
   return (
-    <RadixTabs.Root defaultValue="customise-tab">
+    <RadixTabs.Root defaultValue="card-tab">
       <RadixTabs.List className="bg-button-background bg-opacity-10 border border-button-background p-2 space-x-2 rounded-xl ">
         <RadixTabs.Trigger
-          value="customise-tab"
+          value="card-tab"
           className="p-2 font-bold data-[state=active]:bg-black data-[state=active]:rounded-lg data-[state=active]:p-2 data-[state=active]:bg-opacity-40"
         >
-          Customise
+          Card
         </RadixTabs.Trigger>
         <RadixTabs.Trigger
           className="p-2 font-bold data-[state=active]:bg-black data-[state=active]:rounded-lg data-[state=active]:p-2 data-[state=active]:bg-opacity-40"
           value="uploads-tab"
         >
-          Uploads
+          Uploader
         </RadixTabs.Trigger>
         <RadixTabs.Trigger
           className="p-2 font-bold data-[state=active]:bg-black data-[state=active]:rounded-lg data-[state=active]:p-2 data-[state=active]:bg-opacity-40"
-          value="settings-tab"
+          value="account-tab"
         >
-          Settings
+          Account
         </RadixTabs.Trigger>
       </RadixTabs.List>
-      <RadixTabs.Content value="customise-tab">
+      <RadixTabs.Content value="card-tab">
         <CustomiseTab user={user} />
       </RadixTabs.Content>
-      <RadixTabs.Content value="uploads-tab">UPLOADS</RadixTabs.Content>
-      <RadixTabs.Content value="settings-tab">
+      <RadixTabs.Content value="uploads-tab">
+        <UploadsTabs />
+      </RadixTabs.Content>
+      <RadixTabs.Content value="account-tab">
         <p>SETTINGS HERE</p>
       </RadixTabs.Content>
     </RadixTabs.Root>

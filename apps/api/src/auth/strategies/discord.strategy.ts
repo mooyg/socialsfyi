@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport'
-import { Strategy } from 'passport-discord'
+import { Strategy, VerifyCallback } from '@oauth-everything/passport-discord'
 import { config } from 'dotenv'
 import { DiscordProfile } from 'src/types'
 import { Injectable, UnauthorizedException } from '@nestjs/common'
@@ -14,7 +14,6 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
       callbackURL: process.env.DISCORD_CALLBACK_URL,
       scope: process.env.DISCORD_SCOPES.split(' '),
-      sessions: true,
       successRedirect: 'http://localhost:8000/dashboard',
     })
   }
@@ -22,7 +21,7 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
     _accessToken: string,
     _refreshToken: string,
     profile: DiscordProfile,
-    done: Function
+    done: VerifyCallback
   ) {
     try {
       const user = await this._usersService.findByDiscordId(profile.id)
@@ -32,10 +31,10 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
           email: profile.email,
           discordUsername: profile.username,
         })
+
         done(null, createdUser)
-      } else {
-        done(null, user)
       }
+      done(null, user)
     } catch (e) {
       done(e, null)
     }

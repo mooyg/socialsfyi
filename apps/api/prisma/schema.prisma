@@ -22,10 +22,16 @@ model User {
 }
 
 model Card {
-  id     String @id @default(uuid())
-  bio    String @db.VarChar(1000)
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
+  id                 String  @id @default(uuid())
+  bio                String? @default("Default Bio") @db.VarChar(1000)
+  cardBanner         String?
+  passwordProtection Boolean @default(false)
+  password           String?
+  viewCount          Int?    @default(0)
+  viewCountEnabled   Boolean @default(false)
+  colorBackground    String  @default("#aabbcc")
+  user               User    @relation(fields: [userId], references: [id])
+  userId             String  @unique
 }
 
 model Session {

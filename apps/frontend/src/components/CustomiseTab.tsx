@@ -1,17 +1,51 @@
 'use client'
-import { useBoundStore } from '@/store'
-import { User } from '@/types'
-import * as Avatar from '@radix-ui/react-avatar'
+import { User, UserCard } from '@/types'
+import * as Switch from '@radix-ui/react-switch'
+import { useState } from 'react'
+import { HexColorPicker } from 'react-colorful'
 import * as Popover from '@radix-ui/react-popover'
+import * as Avatar from '@radix-ui/react-avatar'
+import { useDebounce } from '@/hooks/use-debounce'
+import ky from '@/ky'
 
 interface CustomiseTab {
   user: User | undefined
 }
 export function CustomiseTab({ user }: CustomiseTab) {
+  const [color, setColor] = useState('#aabbcc')
+  const [passwordInput, setPasswordInput] = useState(false)
+  const [viewCountEnabled, setViewCountEnabled] = useState(user?.card.viewCountEnabled)
+  const [passwordProtection, setPasswordProtection] = useState(user?.card.passwordProtection)
+  const [password, setPassword] = useState('')
+  function updateShowViewCount(e: boolean) {
+    ky.post('card/update/showviewcount', {
+      json: {
+        userId: user?.id,
+        showViewCount: e,
+      },
+    })
+      .json<UserCard>()
+      .then((data) => {
+        setViewCountEnabled(data.viewCountEnabled)
+      })
+  }
+
+  function enablePassword() {
+    ky.post('update/enable/password', {
+      json: {
+        userId: user?.id,
+        password,
+      },
+    })
+      .json<UserCard>()
+      .then((data) => {
+        setPasswordProtection(data.passwordProtection)
+      })
+  }
   return (
     <>
       <div className="flex flex-col space-y-4">
-        <h2 className="animate-text bg-gradient-to-r from-white  to-button-background bg-clip-text text-transparent text-2xl font-black">
+        <h2 className="animate-text bg-gradient-to-r from-white  to-button-background bg-clip-text text-transparent text-2xl font-black mt-2">
           Start Customising your card
         </h2>
         <div className="flex flex-col space-y-2">
@@ -75,16 +109,59 @@ export function CustomiseTab({ user }: CustomiseTab) {
               </Popover.Content>
             </Popover.Portal>
           </Popover.Root>
+          <label className="text-md font-bold">Views {user?.card.viewCount}</label>
+          <Switch.Root
+            defaultChecked={viewCountEnabled}
+            onCheckedChange={updateShowViewCount}
+            className="w-[42px] h-[25px] rounded-full data-[state=checked]:bg-button-background relative  outline-none cursor-default data-[state=unchecked]:bg-red-500"
+            id="views"
+          >
+            <Switch.Thumb className="block w-[21px] h-[21px] bg-white rounded-full  transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[19px]" />
+          </Switch.Root>
+          <label className="text-md font-bold">Password Protection</label>
+          <Switch.Root
+            defaultChecked={passwordProtection}
+            onCheckedChange={() => setPasswordInput(true)}
+            className="w-[42px] h-[25px] rounded-full data-[state=checked]:bg-button-background relative  outline-none cursor-default data-[state=unchecked]:bg-red-500"
+            id="password-protected"
+          >
+            <Switch.Thumb className="block w-[21px] h-[21px] bg-white   rounded-full  transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[19px]" />
+          </Switch.Root>
+          {passwordInput && (
+            <>
+              <input
+                onChange={(e) => setPassword(e.target.value.trim())}
+                type="password"
+                className="p-2 bg-button-background border border-button-background bg-opacity-10 outline-none rounded-lg text-sm font-semibold"
+                placeholder="Enter your card password"
+              />
+              <button
+                onClick={enablePassword}
+                className="bg-button-background bg-opacity-10 w-fit p-2 rounded-md border border-button-background font-extrabold "
+              >
+                Save
+              </button>
+            </>
+          )}
+          <label className="text-md font-bold">Pick a color for your card</label>
+          <Popover.Root>
+            <Popover.Trigger asChild>
+              <button className="bg-button-background bg-opacity-10 w-fit p-2 rounded-md border border-button-background font-extrabold px-10">
+                {color}
+              </button>
+            </Popover.Trigger>
+            <Popover.Content>
+              <HexColorPicker color={color} onChange={setColor} />
+              <Popover.Arrow className="fill-white" />
+            </Popover.Content>
+          </Popover.Root>
           <label className="text-md font-bold">Bio</label>
           <textarea
+            onChange={() => null}
             value={user?.card.bio}
             className="p-2 bg-button-background font-semibold text-sm bg-opacity-10 appearance-none inline-flex items-center justify-center rounded-md outline-none box-border  selection:color-white resize-none"
           />
         </div>
-
-        <button className="bg-button-background bg-opacity-10 w-fit p-2 rounded-md border border-button-background font-extrabold px-10">
-          Save
-        </button>
       </div>
     </>
   )

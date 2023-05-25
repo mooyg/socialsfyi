@@ -13,9 +13,7 @@ export class UsersService {
         password: hashedPassword,
         username: createUserDto.username,
         card: {
-          create: {
-            bio: 'Your Bio',
-          },
+          create: {},
         },
       },
     })
@@ -30,9 +28,7 @@ export class UsersService {
         discordId: createDiscordUserDto.discordId,
         discordUsername: createDiscordUserDto.discordUsername,
         card: {
-          create: {
-            bio: 'Your Bio',
-          },
+          create: {},
         },
       },
     })
