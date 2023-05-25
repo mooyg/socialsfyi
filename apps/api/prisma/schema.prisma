@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id              String  @id @default(uuid())
-  username        String? @unique
-  email           String  @unique
+  id              String   @id @default(uuid())
+  username        String?  @unique
+  email           String   @unique
   password        String?
   avatar          String?
   discordUsername String?
-  discordId       String? @unique
+  discordId       String?  @unique
   card            Card?
+  uploads         Uploads?
 }
 
 model Card {
@@ -32,6 +33,15 @@ model Card {
   colorBackground    String  @default("#aabbcc")
   user               User    @relation(fields: [userId], references: [id])
   userId             String  @unique
+}
+
+model Uploads {
+  id         String @id @default(uuid())
+  uploader   User   @relation(fields: [uploaderId], references: [id])
+  uploaderId String @unique
+  name       String
+  type       String
+  slug       String
 }
 
 model Session {
