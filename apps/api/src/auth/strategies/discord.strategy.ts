@@ -14,6 +14,8 @@ export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
       callbackURL: process.env.DISCORD_CALLBACK_URL,
       scope: process.env.DISCORD_SCOPES.split(' '),
+      sessions: true,
+      successRedirect: 'http://localhost:8000/dashboard',
     })
   }
   async validate(

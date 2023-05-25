@@ -18,7 +18,7 @@ model User {
   avatar          String?
   discordUsername String?
   discordId       String? @unique
-  Card            Card?
+  card            Card?
 }
 
 model Card {

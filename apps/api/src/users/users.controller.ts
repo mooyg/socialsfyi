@@ -13,9 +13,9 @@ import {
 } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { CreateUserDto } from './dto/create-user.dto'
-import { IsAuthenticatedGuard } from 'src/auth/guards/is-authenticated.guard'
 import { Request } from 'express'
 import { User } from '@prisma/client'
+import { AuthenticatedGuard } from 'src/auth/guards/is-authenticated.guard'
 
 @Controller('users')
 export class UsersController {
@@ -29,9 +29,16 @@ export class UsersController {
     }
   }
   @Post('/me')
-  @UseGuards(IsAuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   async me(@Req() request: Request) {
     const reqUser = request.user as Omit<User, 'password'>
+    return await this._usersService.findById(reqUser.id)
+  }
+  @Post('/me/discord')
+  @UseGuards(AuthenticatedGuard)
+  async meDiscord(@Req() request: Request) {
+    const reqUser = request.user as Omit<User, 'password'>
+    console.log(reqUser)
     return await this._usersService.findById(reqUser.id)
   }
 

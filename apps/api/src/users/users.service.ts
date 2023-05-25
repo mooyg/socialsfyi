@@ -12,7 +12,7 @@ export class UsersService {
         email: createUserDto.email,
         password: hashedPassword,
         username: createUserDto.username,
-        Card: {
+        card: {
           create: {
             bio: 'Your Bio',
           },
@@ -29,7 +29,7 @@ export class UsersService {
         email: createDiscordUserDto.email,
         discordId: createDiscordUserDto.discordId,
         discordUsername: createDiscordUserDto.discordUsername,
-        Card: {
+        card: {
           create: {
             bio: 'Your Bio',
           },
@@ -49,6 +49,9 @@ export class UsersService {
       where: {
         id,
       },
+      include: {
+        card: true,
+      },
     })
     delete user.password
     return user
@@ -58,6 +61,9 @@ export class UsersService {
     const user = await this._prisma.user.findFirst({
       where: {
         email,
+      },
+      include: {
+        card: true,
       },
     })
     return user

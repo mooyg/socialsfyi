@@ -1,7 +1,13 @@
+'use client'
+import { useBoundStore } from '@/store'
+import { User } from '@/types'
 import * as Avatar from '@radix-ui/react-avatar'
 import * as Popover from '@radix-ui/react-popover'
 
-export function CustomiseTab() {
+interface CustomiseTab {
+  user: User | undefined
+}
+export function CustomiseTab({ user }: CustomiseTab) {
   return (
     <>
       <div className="flex flex-col space-y-4">
@@ -70,7 +76,10 @@ export function CustomiseTab() {
             </Popover.Portal>
           </Popover.Root>
           <label className="text-md font-bold">Bio</label>
-          <textarea className="p-2 bg-button-background font-semibold text-sm bg-opacity-10 appearance-none inline-flex items-center justify-center rounded-md outline-none box-border  selection:color-white resize-none" />
+          <textarea
+            value={user?.card.bio}
+            className="p-2 bg-button-background font-semibold text-sm bg-opacity-10 appearance-none inline-flex items-center justify-center rounded-md outline-none box-border  selection:color-white resize-none"
+          />
         </div>
 
         <button className="bg-button-background bg-opacity-10 w-fit p-2 rounded-md border border-button-background font-extrabold px-10">

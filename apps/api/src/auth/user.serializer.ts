@@ -14,6 +14,7 @@ export class UserSerializer extends PassportSerializer {
   }
 
   async deserializeUser(userRef: User, done: Function) {
+    console.log('DESERIALIZED USER')
     const user = await this._userService.findByEmail(userRef.email)
 
     delete user.password

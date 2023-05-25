@@ -8,11 +8,11 @@ import {
   Get,
   Res,
 } from '@nestjs/common'
-import { IsAuthenticatedGuard } from './guards/is-authenticated.guard'
 import { LocalAuthGuard } from './guards/local-auth.guard'
 import { Request, Response } from 'express'
 import { SignInUserDto } from './dto/sign-in-user.dto'
 import { AuthGuard } from '@nestjs/passport'
+import { AuthenticatedGuard } from './guards/is-authenticated.guard'
 
 @Controller('auth')
 export class AuthController {
@@ -24,7 +24,7 @@ export class AuthController {
   }
 
   @Post('/signout')
-  @UseGuards(IsAuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard)
   async signOut(@Req() request: Request) {
     const logoutError = await new Promise((resolve) =>
       request.logOut({ keepSessionInfo: false }, (error) => resolve(error))
@@ -48,7 +48,7 @@ export class AuthController {
   @Get('/discord/callback')
   @UseGuards(AuthGuard('discord'))
   async discordAuthCallback(@Req() request: Request, @Res() response: Response) {
-    const { user } = request
-    response.redirect('http://localhost:3000')
+    console.log(request.user)
+    response.redirect('http://localhost:8000')
   }
 }
