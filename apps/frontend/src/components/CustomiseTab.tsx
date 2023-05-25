@@ -12,11 +12,14 @@ interface CustomiseTab {
   user: User | undefined
 }
 export function CustomiseTab({ user }: CustomiseTab) {
-  const [color, setColor] = useState('#aabbcc')
+  const [color, setColor] = useState(user?.card.colorBackground)
   const [passwordInput, setPasswordInput] = useState(false)
   const [viewCountEnabled, setViewCountEnabled] = useState(user?.card.viewCountEnabled)
   const [passwordProtection, setPasswordProtection] = useState(user?.card.passwordProtection)
   const [password, setPassword] = useState('')
+  const [showSaveBioButton, setShowSaveBioButton] = useState(false)
+  const [bio, setBio] = useState(user?.card.bio)
+
   function updateShowViewCount(e: boolean) {
     ky.post('card/update/showviewcount', {
       json: {
@@ -28,10 +31,13 @@ export function CustomiseTab({ user }: CustomiseTab) {
       .then((data) => {
         setViewCountEnabled(data.viewCountEnabled)
       })
+      .catch((e) => {
+        console.log(e)
+      })
   }
 
   function enablePassword() {
-    ky.post('update/enable/password', {
+    ky.post('card/update/enable/password', {
       json: {
         userId: user?.id,
         password,
@@ -40,6 +46,57 @@ export function CustomiseTab({ user }: CustomiseTab) {
       .json<UserCard>()
       .then((data) => {
         setPasswordProtection(data.passwordProtection)
+        setPasswordInput(false)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+  function disablePassword() {
+    ky.post('card/update/disable/password', {
+      json: {
+        userId: user?.id,
+      },
+    })
+      .json<UserCard>()
+      .then((data) => {
+        setPasswordProtection(data.passwordProtection)
+        setPasswordInput(false)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+
+  function saveBio() {
+    ky.post('card/update/bio', {
+      json: {
+        userId: user?.id,
+        bio,
+      },
+    })
+      .json<UserCard>()
+      .then((data) => {
+        setBio(data.bio)
+        setShowSaveBioButton(false)
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+  function saveCardColor() {
+    ky.post('card/update/color', {
+      json: {
+        userId: user?.id,
+        cardColor: color,
+      },
+    })
+      .json<UserCard>()
+      .then((data) => {
+        setColor(data.colorBackground)
+      })
+      .catch((e) => {
+        console.log(e)
       })
   }
   return (
@@ -109,7 +166,9 @@ export function CustomiseTab({ user }: CustomiseTab) {
               </Popover.Content>
             </Popover.Portal>
           </Popover.Root>
-          <label className="text-md font-bold">Views {user?.card.viewCount}</label>
+          <label className="text-md font-bold">
+            Views {viewCountEnabled && user?.card.viewCount}
+          </label>
           <Switch.Root
             defaultChecked={viewCountEnabled}
             onCheckedChange={updateShowViewCount}
@@ -121,7 +180,13 @@ export function CustomiseTab({ user }: CustomiseTab) {
           <label className="text-md font-bold">Password Protection</label>
           <Switch.Root
             defaultChecked={passwordProtection}
-            onCheckedChange={() => setPasswordInput(true)}
+            onCheckedChange={(isChecked) => {
+              if (isChecked) {
+                setPasswordInput(true)
+              } else {
+                disablePassword()
+              }
+            }}
             className="w-[42px] h-[25px] rounded-full data-[state=checked]:bg-button-background relative  outline-none cursor-default data-[state=unchecked]:bg-red-500"
             id="password-protected"
           >
@@ -150,17 +215,36 @@ export function CustomiseTab({ user }: CustomiseTab) {
                 {color}
               </button>
             </Popover.Trigger>
-            <Popover.Content>
+            <Popover.Content className="bg-black p-2 rounded-lg">
               <HexColorPicker color={color} onChange={setColor} />
+              <Popover.Close
+                className="bg-button-background bg-opacity-10 w-fit mt-2 p-2 rounded-md border border-button-background font-extrabold "
+                onClick={saveCardColor}
+              >
+                Save
+              </Popover.Close>
               <Popover.Arrow className="fill-white" />
             </Popover.Content>
           </Popover.Root>
           <label className="text-md font-bold">Bio</label>
           <textarea
-            onChange={() => null}
-            value={user?.card.bio}
+            onChange={(e) => {
+              setBio(e.target.value)
+              if (!showSaveBioButton) {
+                setShowSaveBioButton(true)
+              }
+            }}
+            value={bio}
             className="p-2 bg-button-background font-semibold text-sm bg-opacity-10 appearance-none inline-flex items-center justify-center rounded-md outline-none box-border  selection:color-white resize-none"
           />
+          {showSaveBioButton && (
+            <button
+              onClick={saveBio}
+              className="bg-button-background bg-opacity-10 w-fit p-2 rounded-md border border-button-background font-extrabold "
+            >
+              Save
+            </button>
+          )}
         </div>
       </div>
     </>

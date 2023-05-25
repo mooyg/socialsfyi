@@ -5,6 +5,7 @@ import { UpdateUserBioDto } from './dto/update-user-card-bio'
 import { UpdateShowViewCountDto } from './dto/update-user-card-viewcount'
 import { EnablePasswordProtectionDto } from './dto/enable-password-protection.dto'
 import { DisablePasswordProtectionDto } from './dto/disable-password-protection.dto'
+import { UpdateCardColorDto } from './dto/update-card-color.dto'
 
 @Controller('card')
 export class CardController {
@@ -45,6 +46,16 @@ export class CardController {
   ) {
     try {
       return await this._cardService.disablePasswordProtection(disablePasswordProtectionDto)
+    } catch (error) {
+      throw new NotFoundException()
+    }
+  }
+
+  @Post('/update/color')
+  @UseGuards(AuthenticatedGuard)
+  async updateCardColor(@Body() updateCardColorDto: UpdateCardColorDto) {
+    try {
+      return await this._cardService.updateCardColor(updateCardColorDto)
     } catch (error) {
       throw new NotFoundException()
     }

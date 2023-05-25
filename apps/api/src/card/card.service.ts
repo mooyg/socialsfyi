@@ -5,6 +5,7 @@ import { EnablePasswordProtectionDto } from './dto/enable-password-protection.dt
 import { DisablePasswordProtectionDto } from './dto/disable-password-protection.dto'
 import { UpdateShowViewCountDto } from './dto/update-user-card-viewcount'
 import { hash } from 'bcrypt'
+import { UpdateCardColorDto } from './dto/update-card-color.dto'
 
 @Injectable()
 export class CardService {
@@ -51,6 +52,17 @@ export class CardService {
       },
       data: {
         passwordProtection: false,
+      },
+    })
+  }
+  async updateCardColor(updateCardColor: UpdateCardColorDto) {
+    console.log(updateCardColor)
+    return await this._prisma.card.update({
+      where: {
+        userId: updateCardColor.userId,
+      },
+      data: {
+        colorBackground: updateCardColor.cardColor,
       },
     })
   }
