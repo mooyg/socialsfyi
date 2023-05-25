@@ -71,14 +71,16 @@ export default function Login() {
           <Form.Submit asChild>
             <button
               disabled={loading}
-              className={`bg-button-background bg-opacity-10 w-fit p-2 rounded-md border border-button-background font-extrabold px-8 `}
+              className={`bg-button-background bg-opacity-10 w-fit p-2 rounded-md border border-button-background font-extrabold px-8 text-center`}
             >
               Login
             </button>
           </Form.Submit>
-          <div className="bg-red-700 bg-opacity-10 border border-red-700 p-1">
-            {error ? 'Some Error Occured' : null}
-          </div>
+          {error ? (
+            <div className="flex font-bold bg-red-700 border border-red-700 bg-opacity-10 p-1 rounded-xl text-xs">
+              Some Error Occured
+            </div>
+          ) : null}
         </Form.Root>
       </div>
     </div>
