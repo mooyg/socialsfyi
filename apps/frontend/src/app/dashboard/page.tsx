@@ -1,5 +1,8 @@
 import { Tabs } from '@/components/Tabs'
+import ky from '@/ky'
+import { getUploads } from '@/lib/getUploads'
 import { getUser } from '@/lib/getUser'
+import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { cookies } from 'next/headers'
 import { redirect, useRouter } from 'next/navigation'
 
@@ -10,6 +13,7 @@ export default async function Dashboard() {
   if (!user) {
     redirect('/login')
   }
+  const uploads = await getUploads(token)
   return (
     <>
       <div className="flex justify-center items-center h-screen">
@@ -18,7 +22,7 @@ export default async function Dashboard() {
             <p className="font-bold text-4xl ">Welcome </p>
             <p className="font-bold text-4xl text-button-background">{user?.username}!</p>
           </div>
-          <Tabs user={user} />
+          <Tabs user={user} uploads={uploads} />
         </div>
       </div>
     </>

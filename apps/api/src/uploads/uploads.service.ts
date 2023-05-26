@@ -56,4 +56,13 @@ export class UploadsService {
     })
     return await this._usersService.updateProfileAvatar(uploadProfileAvatarDto.userId, upload.id)
   }
+
+  async getUserUploads(userId: string) {
+    return await this._prisma.uploads.findMany({
+      where: {
+        uploaderId: userId,
+      },
+      orderBy: {},
+    })
+  }
 }

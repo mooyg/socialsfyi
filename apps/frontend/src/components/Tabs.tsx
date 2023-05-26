@@ -1,13 +1,14 @@
 'use client'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import { CustomiseTab } from '@/components/CustomiseTab'
-import { User } from '@/types'
+import { User, UserUploads } from '@/types'
 import { UploadsTabs } from './UploadsTab'
 
 interface Tabs {
   user: User | undefined
+  uploads: UserUploads[] | undefined
 }
-export function Tabs({ user }: Tabs) {
+export function Tabs({ user, uploads }: Tabs) {
   return (
     <RadixTabs.Root defaultValue="card-tab">
       <RadixTabs.List className="bg-button-background bg-opacity-10 border border-button-background p-2 space-x-2 rounded-xl ">
@@ -34,7 +35,7 @@ export function Tabs({ user }: Tabs) {
         <CustomiseTab user={user} />
       </RadixTabs.Content>
       <RadixTabs.Content value="uploads-tab">
-        <UploadsTabs />
+        <UploadsTabs user={user} uploads={uploads} />
       </RadixTabs.Content>
       <RadixTabs.Content value="account-tab">
         <p>SETTINGS HERE</p>

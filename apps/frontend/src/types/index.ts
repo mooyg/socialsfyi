@@ -5,7 +5,7 @@ export interface User {
   discordId?: string
   discordUsername?: string
   avatar?: string
-  card: UserCard
+  card?: UserCard
 }
 
 export interface UserSlice {
@@ -23,4 +23,16 @@ export interface UserCard {
   viewCountEnabled: boolean
   colorBackground: string
   userId: string
+}
+
+export interface UserUploads {
+  id: string
+  uploaderId: string
+  name: string
+  type: Type
+}
+
+export enum Type {
+  ImageJPEG = 'image/jpeg',
+  ImagePNG = 'image/png',
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Post,
@@ -127,5 +128,11 @@ export class UploadsController {
     @Body() uploadProfileAvatarDto: UploadProfileAvatarDto
   ) {
     return await this._uploadsService.uploadProfileAvatar(file, uploadProfileAvatarDto)
+  }
+
+  @Get('/')
+  @UseGuards(AuthenticatedGuard)
+  async getUserUploads(@Req() request: Request) {
+    return await this._uploadsService.getUserUploads(request.user.id)
   }
 }
