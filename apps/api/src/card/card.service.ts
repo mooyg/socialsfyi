@@ -75,4 +75,13 @@ export class CardService {
       },
     })
   }
+
+  async getCardByUsername(username: string) {
+    return await this._prisma.user.findUnique({
+      where: { username },
+      include: {
+        card: true,
+      },
+    })
+  }
 }

@@ -14,11 +14,12 @@ import { UploadsService } from './uploads.service'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { diskStorage } from 'multer'
 import { extname } from 'path'
-import { nanoid } from 'nanoid'
 import { AuthenticatedGuard } from 'src/auth/guards/is-authenticated.guard'
 import { Request } from 'express'
 import { UploadCardBannerDto } from './dto/upload-card-banner.dto'
 import { UploadProfileAvatarDto } from './dto/upload-profile-avatar.dto'
+import { uid } from 'uid'
+import { ApiKeyGuard } from 'src/auth/guards/api-key.guard'
 
 @Controller('uploads')
 export class UploadsController {
@@ -31,7 +32,7 @@ export class UploadsController {
         destination: './useruploads',
         filename: async (req, file, cb) => {
           const originalName = file.originalname
-          const suffix = nanoid(5)
+          const suffix = uid()
           cb(null, `${suffix}${extname(originalName)}`)
         },
       }),
@@ -55,7 +56,41 @@ export class UploadsController {
   )
   @UseGuards(AuthenticatedGuard)
   async uploadFile(@UploadedFile() file: Express.Multer.File, @Req() request: Request) {
-    return await this._uploadsService.saveFile(request.file, request.user)
+    return await this._uploadsService.saveFile(file, request.user.id)
+  }
+
+  @Post('file/sharex')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './useruploads',
+        filename: async (req, file, cb) => {
+          const originalName = file.originalname
+          const suffix = uid()
+          cb(null, `${suffix}${extname(originalName)}`)
+        },
+      }),
+      limits: {
+        fileSize: +process.env.MAX_FILE_SIZE,
+      },
+      fileFilter: (req, file, cb) => {
+        if (file.mimetype.match(/\/(jpg|jpeg|png|gif|pdf)$/)) {
+          cb(null, true)
+        } else {
+          cb(
+            new HttpException(
+              `Unsupported file type ${extname(file.originalname)}`,
+              HttpStatus.BAD_REQUEST
+            ),
+            false
+          )
+        }
+      },
+    })
+  )
+  @UseGuards(ApiKeyGuard)
+  async uploadFileShareX(@UploadedFile() file: Express.Multer.File, @Req() request: Request) {
+    return await this._uploadsService.saveFile(file, request.headers['user-id'] as string)
   }
   @Post('/cardbanner')
   @UseInterceptors(
@@ -64,7 +99,7 @@ export class UploadsController {
         destination: './useruploads',
         filename: async (req, file, cb) => {
           const originalName = file.originalname
-          const suffix = nanoid(5)
+          const suffix = uid(5)
           cb(null, `${suffix}${extname(originalName)}`)
         },
       }),
@@ -100,7 +135,7 @@ export class UploadsController {
         destination: './useruploads',
         filename: async (req, file, cb) => {
           const originalName = file.originalname
-          const suffix = nanoid(5)
+          const suffix = uid(5)
           cb(null, `${suffix}${extname(originalName)}`)
         },
       }),

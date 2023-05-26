@@ -60,4 +60,10 @@ export class UsersController {
   async remove(@Param('id') id: string) {
     return await this._usersService.remove(id)
   }
+
+  @Post('/gen/api')
+  @UseGuards(AuthenticatedGuard)
+  async generateApiKey(@Req() request: Request) {
+    return await this._usersService.generateApiKey(request.user.id)
+  }
 }

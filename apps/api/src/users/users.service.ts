@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { CreateDiscordUserDto, CreateUserDto } from './dto/create-user.dto'
 import { PrismaService } from 'src/prisma'
-import { hash } from 'bcrypt'
+import { compare, hash } from 'bcrypt'
+import { uid } from 'uid'
 @Injectable()
 export class UsersService {
   constructor(private readonly _prisma: PrismaService) {}
@@ -13,6 +14,9 @@ export class UsersService {
         password: hashedPassword,
         username: createUserDto.username,
         card: {
+          create: {},
+        },
+        socials: {
           create: {},
         },
       },
@@ -28,6 +32,9 @@ export class UsersService {
         discordId: createDiscordUserDto.discordId,
         discordUsername: createDiscordUserDto.discordUsername,
         card: {
+          create: {},
+        },
+        socials: {
           create: {},
         },
       },
@@ -47,6 +54,7 @@ export class UsersService {
       },
       include: {
         card: true,
+        socials: true,
       },
     })
     delete user.password
@@ -60,6 +68,7 @@ export class UsersService {
       },
       include: {
         card: true,
+        socials: true,
       },
     })
     return user
@@ -91,5 +100,30 @@ export class UsersService {
         avatar: imageId,
       },
     })
+  }
+
+  async generateApiKey(userId: string) {
+    const uniqueId = uid(32)
+    const hashedKey = await hash(uniqueId, 10)
+    await this._prisma.user.update({
+      where: { id: userId },
+      data: {
+        apiKey: hashedKey,
+      },
+    })
+    return uniqueId
+  }
+
+  async isApiKeyValid(key: string, userId: string) {
+    const user = await this._prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    })
+
+    console.log(key)
+    const isKeyValid = await compare(key, user.apiKey)
+    console.log(isKeyValid)
+    return isKeyValid
   }
 }

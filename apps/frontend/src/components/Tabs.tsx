@@ -3,6 +3,7 @@ import * as RadixTabs from '@radix-ui/react-tabs'
 import { CustomiseTab } from '@/components/CustomiseTab'
 import { User, UserUploads } from '@/types'
 import { UploadsTabs } from './UploadsTab'
+import { SocialsTab } from './SocialsTab'
 
 interface Tabs {
   user: User | undefined
@@ -11,21 +12,27 @@ interface Tabs {
 export function Tabs({ user, uploads }: Tabs) {
   return (
     <RadixTabs.Root defaultValue="card-tab">
-      <RadixTabs.List className="bg-button-background bg-opacity-10 border border-button-background p-2 space-x-2 rounded-xl ">
+      <RadixTabs.List className="bg-button-background border-button-background space-x-2 rounded-xl border bg-opacity-10 p-2">
         <RadixTabs.Trigger
           value="card-tab"
-          className="p-2 font-bold data-[state=active]:bg-black data-[state=active]:rounded-lg data-[state=active]:p-2 data-[state=active]:bg-opacity-40"
+          className="p-2 font-bold data-[state=active]:rounded-lg data-[state=active]:bg-black data-[state=active]:bg-opacity-40 data-[state=active]:p-2"
         >
           Card
         </RadixTabs.Trigger>
         <RadixTabs.Trigger
-          className="p-2 font-bold data-[state=active]:bg-black data-[state=active]:rounded-lg data-[state=active]:p-2 data-[state=active]:bg-opacity-40"
+          className="p-2 font-bold data-[state=active]:rounded-lg data-[state=active]:bg-black data-[state=active]:bg-opacity-40 data-[state=active]:p-2"
           value="uploads-tab"
         >
           Uploader
         </RadixTabs.Trigger>
         <RadixTabs.Trigger
-          className="p-2 font-bold data-[state=active]:bg-black data-[state=active]:rounded-lg data-[state=active]:p-2 data-[state=active]:bg-opacity-40"
+          className="p-2 font-bold data-[state=active]:rounded-lg data-[state=active]:bg-black data-[state=active]:bg-opacity-40 data-[state=active]:p-2"
+          value="socials-tab"
+        >
+          Socials
+        </RadixTabs.Trigger>
+        <RadixTabs.Trigger
+          className="p-2 font-bold data-[state=active]:rounded-lg data-[state=active]:bg-black data-[state=active]:bg-opacity-40 data-[state=active]:p-2"
           value="account-tab"
         >
           Account
@@ -36,6 +43,9 @@ export function Tabs({ user, uploads }: Tabs) {
       </RadixTabs.Content>
       <RadixTabs.Content value="uploads-tab">
         <UploadsTabs user={user} uploads={uploads} />
+      </RadixTabs.Content>
+      <RadixTabs.Content value="socials-tab">
+        <SocialsTab />
       </RadixTabs.Content>
       <RadixTabs.Content value="account-tab">
         <p>SETTINGS HERE</p>

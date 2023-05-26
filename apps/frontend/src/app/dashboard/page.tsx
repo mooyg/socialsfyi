@@ -16,11 +16,11 @@ export default async function Dashboard() {
   const uploads = await getUploads(token)
   return (
     <>
-      <div className="flex justify-center items-center h-screen">
-        <div className="flex flex-col space-x-2 space-y-2  bg-secondary-background p-8 border border-button-background rounded-3xl w-[500px] ">
-          <div className="flex space-x-2 m-1">
-            <p className="font-bold text-4xl ">Welcome </p>
-            <p className="font-bold text-4xl text-button-background">{user?.username}!</p>
+      <div className="flex h-screen items-center justify-center">
+        <div className="bg-secondary-background border-button-background flex w-[512px]  max-w-lg flex-col space-x-2 space-y-2 rounded-3xl border p-8">
+          <div className="m-1 flex space-x-2">
+            <p className="text-4xl font-bold ">Welcome </p>
+            <p className="text-button-background text-4xl font-bold">{user?.username}!</p>
           </div>
           <Tabs user={user} uploads={uploads} />
         </div>

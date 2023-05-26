@@ -14,12 +14,12 @@ export function UploadsTabs({ uploads, user }: UploadsTab) {
 
   return (
     <>
-      <div className="flex flex-col space-y-4 mt-2">
-        <ScrollArea.Root className="rounded overflow-hidden h-[400px] ">
-          <ScrollArea.Viewport className="w-full h-full rounded">
-            <div className="p-4 flex flex-col space-y-2">
-              <h2 className="font-bold text-2xl">Uploads</h2>
-              <label className="font-bold w-fit cursor-pointer bg-button-background bg-opacity-10 p-2 border border-button-background rounded-2xl ">
+      <div className="mt-2 flex flex-col space-y-4">
+        <ScrollArea.Root className="h-96 overflow-hidden rounded">
+          <ScrollArea.Viewport className="h-full w-full rounded">
+            <div className="flex flex-col space-y-2 p-4">
+              <h2 className="text-2xl font-bold">Uploads</h2>
+              <label className="bg-button-background border-button-background w-fit cursor-pointer rounded-2xl border bg-opacity-10 p-2 font-bold ">
                 Upload File
                 <input
                   onChange={(e) => {
@@ -51,23 +51,23 @@ export function UploadsTabs({ uploads, user }: UploadsTab) {
             </div>
             {uploads?.map((upload) => {
               return (
-                <div key={upload.id} className="p-4 border-t border-t-white">
+                <div key={upload.id} className="border-t border-t-white p-4">
                   <img src={`http://localhost:8000/image/${upload.id}`} />
                 </div>
               )
             })}
           </ScrollArea.Viewport>
           <ScrollArea.Scrollbar
-            className="flex select-none touch-none p-0.5 bg-blackA6 transition-colors duration-[160ms] ease-out hover:bg-blackA8 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col data-[orientation=horizontal]:h-2.5"
+            className="bg-blackA6 hover:bg-blackA8 flex touch-none select-none p-0.5 transition-colors duration-[160ms] ease-out data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
             orientation="vertical"
           >
-            <ScrollArea.Thumb className="flex-1 bg-mauve10 rounded-[10px] relative before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-[44px] before:min-h-[44px]" />
+            <ScrollArea.Thumb className="bg-mauve10 relative flex-1 rounded-[10px] before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']" />
           </ScrollArea.Scrollbar>
           <ScrollArea.Scrollbar
-            className="flex select-none touch-none p-0.5 bg-blackA6 transition-colors duration-[160ms] ease-out hover:bg-blackA8 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col data-[orientation=horizontal]:h-2.5"
+            className="bg-blackA6 hover:bg-blackA8 flex touch-none select-none p-0.5 transition-colors duration-[160ms] ease-out data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"
             orientation="horizontal"
           >
-            <ScrollArea.Thumb className="flex-1 bg-mauve10 rounded-[10px] relative before:content-[''] before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-full before:h-full before:min-w-[44px] before:min-h-[44px]" />
+            <ScrollArea.Thumb className="bg-mauve10 relative flex-1 rounded-[10px] before:absolute before:left-1/2 before:top-1/2 before:h-full before:min-h-[44px] before:w-full before:min-w-[44px] before:-translate-x-1/2 before:-translate-y-1/2 before:content-['']" />
           </ScrollArea.Scrollbar>
           <ScrollArea.Corner className="bg-blackA8" />
         </ScrollArea.Root>

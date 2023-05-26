@@ -15,14 +15,14 @@ export class UploadsService {
     private readonly _usersService: UsersService
   ) {}
 
-  async saveFile(multerFile: Express.Multer.File, uploader: Omit<User, 'password'>) {
+  async saveFile(multerFile: Express.Multer.File, uploaderId: string) {
     return await this._prisma.uploads.create({
       data: {
         name: multerFile.filename,
         type: multerFile.mimetype,
         uploader: {
           connect: {
-            id: uploader.id,
+            id: uploaderId,
           },
         },
       },

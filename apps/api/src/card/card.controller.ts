@@ -1,4 +1,4 @@
-import { Body, Controller, NotFoundException, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, NotFoundException, Param, Post, UseGuards } from '@nestjs/common'
 import { CardService } from './card.service'
 import { AuthenticatedGuard } from 'src/auth/guards/is-authenticated.guard'
 import { UpdateUserBioDto } from './dto/update-user-card-bio'
@@ -59,5 +59,10 @@ export class CardController {
     } catch (error) {
       throw new NotFoundException()
     }
+  }
+
+  @Get('/:username')
+  async getCardByUsername(@Param('username') username: string) {
+    return await this._cardService.getCardByUsername(username)
   }
 }
