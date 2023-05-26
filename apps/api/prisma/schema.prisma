@@ -19,7 +19,7 @@ model User {
   discordUsername String?
   discordId       String?  @unique
   card            Card?
-  uploads         Uploads?
+  uploads         Uploads[]
 }
 
 model Card {
@@ -38,7 +38,7 @@ model Card {
 model Uploads {
   id         String @id @default(uuid())
   uploader   User   @relation(fields: [uploaderId], references: [id])
-  uploaderId String @unique
+  uploaderId String 
   name       String
   type       String
 }

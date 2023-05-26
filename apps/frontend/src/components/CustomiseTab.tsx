@@ -19,6 +19,9 @@ export function CustomiseTab({ user }: CustomiseTab) {
   const [password, setPassword] = useState('')
   const [showSaveBioButton, setShowSaveBioButton] = useState(false)
   const [bio, setBio] = useState(user?.card.bio)
+  const [file, setFile] = useState<File>()
+  const [cardBanner, setCardBanner] = useState(user?.card.cardBanner)
+  const [avatar, setAvatar] = useState(user?.avatar)
 
   function updateShowViewCount(e: boolean) {
     ky.post('card/update/showviewcount', {
@@ -99,6 +102,38 @@ export function CustomiseTab({ user }: CustomiseTab) {
         console.log(e)
       })
   }
+
+  function uploadCardBanner() {
+    const form = new FormData()
+    if (!file) {
+      throw new Error('No file')
+    }
+    form.append('file', file)
+    form.append('cardId', user?.card.id!)
+    form.append('userId', user?.id!)
+    ky.post('uploads/cardbanner', {
+      body: form,
+    })
+      .json<UserCard>()
+      .then((data) => {
+        setCardBanner(data.cardBanner)
+      })
+  }
+  function uploadProfileAvatar() {
+    const form = new FormData()
+    if (!file) {
+      throw new Error('No file')
+    }
+    form.append('file', file)
+    form.append('userId', user?.id!)
+    ky.post('uploads/avatar', {
+      body: form,
+    })
+      .json<User>()
+      .then((data) => {
+        setAvatar(data.avatar)
+      })
+  }
   return (
     <>
       <div className="flex flex-col space-y-4">
@@ -106,13 +141,13 @@ export function CustomiseTab({ user }: CustomiseTab) {
           Start Customising your card
         </h2>
         <div className="flex flex-col space-y-2">
-          <label className="text-md font-bold">Profile Picture</label>
+          <label className="text-md font-bold">Profile Avatar</label>
           <Popover.Root>
             <Popover.Trigger className="cursor-pointer" asChild>
               <Avatar.Root className=" inline-flex h-20 w-20 select-none items-center justify-center overflow-hidden rounded-full align-middle hover:opacity-50   ">
                 <Avatar.Image
                   className="h-full w-full rounded-[inherit] object-cover"
-                  src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80"
+                  src={`http://localhost:8000/image/${avatar}`}
                   alt="Colm Tuite"
                 />
                 <Avatar.Fallback className="text-button-background font-bold leading-1 flex h-full w-full items-center justify-center bg-white text-[15px]">
@@ -127,8 +162,20 @@ export function CustomiseTab({ user }: CustomiseTab) {
               >
                 <div className="flex flex-col">
                   <label className="font-bold cursor-pointer">
-                    Choose the profile picture
-                    <input type="file" className="hidden" />
+                    {file ? file.name : 'Choose the profile avatar'}
+                    <input
+                      onChange={(e) => setFile(e.target.files![0])}
+                      type="file"
+                      className="hidden"
+                    />
+                    <Popover.Close>
+                      <button
+                        onClick={uploadProfileAvatar}
+                        className="bg-black bg-opacity-10 w-fit p-2 rounded-md border border-black font-extrabold "
+                      >
+                        Save
+                      </button>
+                    </Popover.Close>
                   </label>
                 </div>
 
@@ -142,7 +189,7 @@ export function CustomiseTab({ user }: CustomiseTab) {
               <Avatar.Root className="inline-flex h-20 select-none items-center justify-center overflow-hidden rounded-md align-middle hover:opacity-50">
                 <Avatar.Image
                   className="h-full w-full rounded-[inherit] object-cover"
-                  src="https://img.freepik.com/free-photo/purple-blue-wallpaper-with-colorful-swirl_1340-27545.jpg?w=740&t=st=1684947940~exp=1684948540~hmac=ed8571bcc0cae8119e54c3b87cd6da3922588336b9a2b8b94e92a1b7314cfab0"
+                  src={`http://localhost:8000/image/${cardBanner}`}
                   alt="Colm Tuite"
                 />
                 <Avatar.Fallback className="text-button-background font-bold leading-1 flex h-full w-full items-center justify-center bg-white text-[15px]">
@@ -157,8 +204,20 @@ export function CustomiseTab({ user }: CustomiseTab) {
               >
                 <div className="flex flex-col">
                   <label className="font-bold cursor-pointer">
-                    Choose the profile banner
-                    <input type="file" className="hidden" />
+                    {file ? file.name : 'Choose the profile banner'}
+                    <input
+                      onChange={(e) => setFile(e.target.files![0])}
+                      type="file"
+                      className="hidden"
+                    />
+                    <Popover.Close>
+                      <button
+                        onClick={uploadCardBanner}
+                        className="bg-black bg-opacity-10 w-fit p-2 rounded-md border border-black font-extrabold "
+                      >
+                        Save
+                      </button>
+                    </Popover.Close>
                   </label>
                 </div>
 

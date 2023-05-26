@@ -81,4 +81,15 @@ export class UsersService {
     })
     return deletedUser
   }
+
+  async updateProfileAvatar(userId: string, imageId: string) {
+    return await this._prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        avatar: imageId,
+      },
+    })
+  }
 }

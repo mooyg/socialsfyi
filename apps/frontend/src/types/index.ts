@@ -16,10 +16,11 @@ export interface UserSlice {
 export interface UserCard {
   id: string
   bio: string
-  userId: string
+  cardBanner: string
   passwordProtection: boolean
-  password: string
+  password: null
   viewCount: number
   viewCountEnabled: boolean
   colorBackground: string
+  userId: string
 }

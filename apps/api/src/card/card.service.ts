@@ -55,14 +55,23 @@ export class CardService {
       },
     })
   }
-  async updateCardColor(updateCardColor: UpdateCardColorDto) {
-    console.log(updateCardColor)
+  async updateCardColor(updateCardColorDto: UpdateCardColorDto) {
     return await this._prisma.card.update({
       where: {
-        userId: updateCardColor.userId,
+        userId: updateCardColorDto.userId,
       },
       data: {
-        colorBackground: updateCardColor.cardColor,
+        colorBackground: updateCardColorDto.cardColor,
+      },
+    })
+  }
+  async updateCardBanner(fileId: string, userId: string, cardId: string) {
+    return await this._prisma.card.update({
+      where: {
+        id: cardId,
+      },
+      data: {
+        cardBanner: fileId,
       },
     })
   }
