@@ -41,7 +41,6 @@ model Uploads {
   uploaderId String @unique
   name       String
   type       String
-  slug       String
 }
 
 model Session {

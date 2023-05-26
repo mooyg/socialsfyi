@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport'
 import { CardModule } from './card/card.module'
 import { UploadsModule } from './uploads/uploads.module'
 import { MulterModule } from '@nestjs/platform-express'
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MulterModule } from '@nestjs/platform-express'
     CardModule,
     UploadsModule,
     MulterModule.register(),
+    ImageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
