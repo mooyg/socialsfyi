@@ -10,7 +10,7 @@ export function CardBanner({ user }: CardBanner) {
     <Avatar.Root className="inline-flex h-[200px]  select-none items-center justify-center overflow-hidden rounded-md align-middle">
       <Avatar.Image
         className="h-full w-full rounded-[inherit] object-cover"
-        src={`http://localhost:8000/image/${user?.card.cardBanner}`}
+        src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/image/${user?.card.cardBanner}`}
         alt="Colm Tuite"
         draggable="false"
       />

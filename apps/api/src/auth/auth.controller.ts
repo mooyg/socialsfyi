@@ -48,6 +48,6 @@ export class AuthController {
   @Get('/discord/callback')
   @UseGuards(AuthGuard('discord'))
   async discordAuthCallback(@Req() request: Request, @Res() response: Response) {
-    response.redirect('http://localhost:3000/dashboard')
+    response.redirect(`${process.env.FRONTEND_URL}/dashboard`)
   }
 }

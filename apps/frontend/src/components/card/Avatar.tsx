@@ -10,7 +10,7 @@ export function CardAvatar({ user }: CardAvatar) {
     <Avatar.Root className=" absolute -top-20  inline-flex h-[110px] w-[110px] select-none items-center justify-center overflow-hidden rounded-full align-middle">
       <Avatar.Image
         className="h-full w-full rounded-[inherit] object-cover"
-        src={`http://localhost:8000/image/${user?.avatar}`}
+        src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/image/${user?.avatar}`}
         alt="Colm Tuite"
         draggable="false"
       />

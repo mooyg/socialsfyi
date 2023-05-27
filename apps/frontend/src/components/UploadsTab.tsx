@@ -52,7 +52,7 @@ export function UploadsTabs({ uploads, user }: UploadsTab) {
             {uploads?.map((upload) => {
               return (
                 <div key={upload.id} className="border-t border-t-white p-4">
-                  <img src={`http://localhost:8000/image/${upload.id}`} />
+                  <img src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/image/${upload.id}`} />
                 </div>
               )
             })}

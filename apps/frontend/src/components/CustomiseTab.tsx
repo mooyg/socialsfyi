@@ -182,7 +182,7 @@ export function CustomiseTab({ user }: CustomiseTab) {
               <Avatar.Root className=" inline-flex h-20 w-20 select-none items-center justify-center overflow-hidden rounded-full align-middle hover:opacity-50   ">
                 <Avatar.Image
                   className="h-full w-full rounded-[inherit] object-cover"
-                  src={`http://localhost:8000/image/${avatar}`}
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/image/${avatar}`}
                   alt="Colm Tuite"
                 />
                 <Avatar.Fallback className="text-button-background leading-1 flex h-full w-full items-center justify-center bg-white text-[15px] font-bold">
@@ -224,7 +224,7 @@ export function CustomiseTab({ user }: CustomiseTab) {
               <Avatar.Root className="inline-flex h-20 select-none items-center justify-center overflow-hidden rounded-md align-middle hover:opacity-50">
                 <Avatar.Image
                   className="h-full w-full rounded-[inherit] object-cover"
-                  src={`http://localhost:8000/image/${cardBanner}`}
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/image/${cardBanner}`}
                   alt="Colm Tuite"
                 />
                 <Avatar.Fallback className="text-button-background leading-1 flex h-full w-full items-center justify-center bg-white text-[15px] font-bold">
