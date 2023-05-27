@@ -16,6 +16,7 @@ import { CreateUserDto } from './dto/create-user.dto'
 import { Request } from 'express'
 import { User } from '@prisma/client'
 import { AuthenticatedGuard } from 'src/auth/guards/is-authenticated.guard'
+import { UpdateUserSocialDto } from './dto/upade-user-social.dto'
 
 @Controller('users')
 export class UsersController {
@@ -34,6 +35,7 @@ export class UsersController {
     const reqUser = request.user as Omit<User, 'password'>
     return await this._usersService.findById(reqUser.id)
   }
+  
   @Post('/me/discord')
   @UseGuards(AuthenticatedGuard)
   async meDiscord(@Req() request: Request) {
@@ -65,5 +67,11 @@ export class UsersController {
   @UseGuards(AuthenticatedGuard)
   async generateApiKey(@Req() request: Request) {
     return await this._usersService.generateApiKey(request.user.id)
+  }
+
+  @Post('/update/social/')
+  @UseGuards(AuthenticatedGuard)
+  async updateUserSocial(@Body() updateUserSocialDto: UpdateUserSocialDto) {
+    return await this._usersService.updateUserSocial(updateUserSocialDto)
   }
 }

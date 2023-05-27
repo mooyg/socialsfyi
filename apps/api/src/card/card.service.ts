@@ -6,6 +6,7 @@ import { DisablePasswordProtectionDto } from './dto/disable-password-protection.
 import { UpdateShowViewCountDto } from './dto/update-user-card-viewcount'
 import { hash } from 'bcrypt'
 import { UpdateCardColorDto } from './dto/update-card-color.dto'
+import { UpdateCardSpotifyEmbedDto } from './dto/update-card-spotify-embed.dto'
 
 @Injectable()
 export class CardService {
@@ -56,14 +57,65 @@ export class CardService {
     })
   }
   async updateCardColor(updateCardColorDto: UpdateCardColorDto) {
-    return await this._prisma.card.update({
+    const isPremiumUser = await this._prisma.user.findUnique({
       where: {
-        userId: updateCardColorDto.userId,
+        id: updateCardColorDto.userId,
       },
-      data: {
-        colorBackground: updateCardColorDto.cardColor,
+      include: {
+        card: true,
       },
     })
+    if (!isPremiumUser) {
+      throw new Error('Not found')
+    }
+    if (isPremiumUser.premium) {
+      return await this._prisma.card.update({
+        where: {
+          userId: updateCardColorDto.userId,
+        },
+        data: {
+          premiumFeatures: {
+            update: {
+              colorBackground: updateCardColorDto.cardColor,
+            },
+          },
+        },
+        include: {
+          premiumFeatures: true,
+        },
+      })
+    } else {
+      throw new Error('Not a premium user')
+    }
+  }
+
+  async updateCardSpotifyEmbed(updateCardSpotifyEmbedDto: UpdateCardSpotifyEmbedDto) {
+    const isPremiumUser = await this._prisma.user.findUnique({
+      where: {
+        id: updateCardSpotifyEmbedDto.userId,
+      },
+    })
+    if (!isPremiumUser) {
+      throw new Error('Not found')
+    }
+    if (isPremiumUser.premium) {
+      console.log(updateCardSpotifyEmbedDto.spotifyEmbedLink)
+      return await this._prisma.card.update({
+        where: {
+          userId: updateCardSpotifyEmbedDto.userId,
+        },
+        data: {
+          premiumFeatures: {
+            update: {
+              spotifyEmbed: updateCardSpotifyEmbedDto.spotifyEmbedLink,
+            },
+          },
+        },
+        include: {
+          premiumFeatures: true,
+        },
+      })
+    }
   }
   async updateCardBanner(fileId: string, userId: string, cardId: string) {
     return await this._prisma.card.update({
@@ -77,11 +129,26 @@ export class CardService {
   }
 
   async getCardByUsername(username: string) {
-    return await this._prisma.user.findUnique({
+    const user = await this._prisma.user.findUnique({
       where: { username },
       include: {
         card: true,
       },
     })
+    if (user.premium) {
+      return await this._prisma.user.findFirst({
+        where: {
+          username,
+        },
+        include: {
+          card: {
+            include: {
+              premiumFeatures: true,
+            },
+          },
+        },
+      })
+    }
+    return user
   }
 }

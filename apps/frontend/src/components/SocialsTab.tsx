@@ -1,30 +1,42 @@
 'use client'
 
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-const SOCIAL_MEDIA = [
-  {
-    name: 'SPOTIFY',
-    icon: '/icons/spotify.svg',
-  },
-  {
-    name: 'GITHUB',
-    icon: '/icons/github.svg',
-  },
-  {
-    name: 'TWITTER',
-    icon: '/icons/twitter.svg',
-  },
-  {
-    name: 'YOUTUBE',
-    icon: '/icons/youtbe.svg',
-  },
-  {
-    name: 'INSTAGRAM',
-    icon: '/icons/instagram.svg',
-  },
-]
+import { useState } from 'react'
+import { SocialLinks } from 'social-links'
+import { FieldInput } from './socialstab/FieldInput'
+import { User } from '@/types'
 
-export function SocialsTab() {
+export interface SocialsTab {
+  user: User | undefined
+}
+export function SocialsTab({ user }: SocialsTab) {
+  const [SOCIAL_MEDIA, SET_SOCIAL_MEDIA] = useState([
+    {
+      name: 'SPOTIFY',
+      icon: '/icons/spotify.svg',
+      value: user?.spotifyURL,
+    },
+    {
+      name: 'GITHUB',
+      icon: '/icons/github.svg',
+      value: user?.githubURL,
+    },
+    {
+      name: 'TWITTER',
+      icon: '/icons/twitter.svg',
+      value: user?.twitterURL,
+    },
+    {
+      name: 'YOUTUBE',
+      icon: '/icons/youtube.svg',
+      value: user?.youtubeURL,
+    },
+    {
+      name: 'INSTAGRAM',
+      icon: '/icons/instagram.svg',
+      value: user?.instagramURL,
+    },
+  ])
   return (
     <div className="mt-2 flex flex-col space-y-4">
       <ScrollArea.Root className="h-[400px] w-full overflow-hidden rounded ">
@@ -32,12 +44,8 @@ export function SocialsTab() {
           <h2 className="animate-text to-button-background mt-2  bg-gradient-to-r from-white bg-clip-text text-2xl font-black text-transparent">
             Add your socials
           </h2>
-          {SOCIAL_MEDIA.map((socialMedia) => (
-            <div className="mt-2.5 border-t border-t-white pt-2.5 text-[13px] leading-[18px] text-white">
-              <div>
-                <input type="text" disabled={true} />
-              </div>
-            </div>
+          {SOCIAL_MEDIA.map((socialMedia, index) => (
+            <FieldInput user={user} key={index} socialMedia={socialMedia} />
           ))}
         </ScrollArea.Viewport>
         <ScrollArea.Scrollbar

@@ -8,12 +8,15 @@ import * as Avatar from '@radix-ui/react-avatar'
 import { useDebounce } from '@/hooks/use-debounce'
 import ky from '@/ky'
 import { Toaster, toast } from 'react-hot-toast'
+import SocialLinks from 'social-links'
 
 interface CustomiseTab {
   user: User | undefined
 }
 export function CustomiseTab({ user }: CustomiseTab) {
-  const [color, setColor] = useState(user?.card.colorBackground)
+  const [color, setColor] = useState(
+    user?.card.premiumFeatures ? user?.card.premiumFeatures.colorBackground : '#e183bb'
+  )
   const [passwordInput, setPasswordInput] = useState(false)
   const [viewCountEnabled, setViewCountEnabled] = useState(user?.card.viewCountEnabled)
   const [passwordProtection, setPasswordProtection] = useState(user?.card.passwordProtection)
@@ -23,7 +26,11 @@ export function CustomiseTab({ user }: CustomiseTab) {
   const [file, setFile] = useState<File>()
   const [cardBanner, setCardBanner] = useState(user?.card.cardBanner)
   const [avatar, setAvatar] = useState(user?.avatar)
-
+  const [showSaveSpotifyEmbedButton, setShowSaveSpotifyEmbedButton] = useState(false)
+  const [spotifyEmbedLink, setSpotifyEmbedLink] = useState(
+    user?.card.premiumFeatures ? user?.card.premiumFeatures.spotifyEmbed : ''
+  )
+  console.log(user)
   function updateShowViewCount(e: boolean) {
     ky.post('card/update/showviewcount', {
       json: {
@@ -106,12 +113,12 @@ export function CustomiseTab({ user }: CustomiseTab) {
     })
       .json<UserCard>()
       .then((data) => {
-        setColor(data.colorBackground)
+        setColor(data.premiumFeatures.colorBackground)
         toast.success('Updated Card Color Successfully')
       })
       .catch((e) => {
         console.log(e)
-        toast.error('Couldnt Update Card Color')
+        toast.error('Some error occured')
       })
   }
 
@@ -144,6 +151,22 @@ export function CustomiseTab({ user }: CustomiseTab) {
       .json<User>()
       .then((data) => {
         setAvatar(data.avatar)
+      })
+  }
+
+  function saveSpotifyEmbed() {
+    const socialLink = new SocialLinks()
+    const isValidSpotifyLink = socialLink.detectProfile(spotifyEmbedLink!)
+    ky.post('card/update/spotify/embed', {
+      json: {
+        userId: user?.id,
+        spotifyEmbedLink,
+      },
+    })
+      .json<UserCard>()
+      .then((data) => {
+        setSpotifyEmbedLink(data.premiumFeatures.spotifyEmbed)
+        toast.success('Updated your spotify embed')
       })
   }
   return (
@@ -280,7 +303,13 @@ export function CustomiseTab({ user }: CustomiseTab) {
             </>
           )}
           <label className="text-md font-bold">Pick a color for your card</label>
-          <Popover.Root>
+          <Popover.Root
+            onOpenChange={(open) => {
+              if (open && !user?.premium) {
+                toast('You are not a premium user')
+              }
+            }}
+          >
             <Popover.Trigger asChild>
               <button className="bg-button-background border-button-background w-fit rounded-md border bg-opacity-10 p-2 px-10 font-extrabold">
                 {color}
@@ -288,9 +317,11 @@ export function CustomiseTab({ user }: CustomiseTab) {
             </Popover.Trigger>
             <Popover.Content className="rounded-lg bg-black p-2">
               <HexColorPicker color={color} onChange={setColor} />
+              {!user?.premium && <h2 className="text-red-600">*Only for premium user</h2>}
               <Popover.Close
                 className="bg-button-background border-button-background mt-2 w-fit rounded-md border bg-opacity-10 p-2 font-extrabold "
                 onClick={saveCardColor}
+                disabled={!user?.premium}
               >
                 Save
               </Popover.Close>
@@ -299,11 +330,10 @@ export function CustomiseTab({ user }: CustomiseTab) {
           </Popover.Root>
           <label className="text-md font-bold">Bio</label>
           <textarea
+            onFocus={() => setShowSaveBioButton(true)}
+            onBlur={() => setShowSaveBioButton(false)}
             onChange={(e) => {
               setBio(e.target.value)
-              if (!showSaveBioButton) {
-                setShowSaveBioButton(true)
-              }
             }}
             value={bio}
             className="bg-button-background selection:color-white box-border inline-flex resize-none appearance-none items-center justify-center rounded-md bg-opacity-10 p-2 text-sm  font-semibold outline-none"
@@ -328,6 +358,30 @@ export function CustomiseTab({ user }: CustomiseTab) {
               <Popover.Arrow className="fill-white" />
             </Popover.Content>
           </Popover.Root>
+          <label className="text-md font-bold">
+            Spotify Embed{' '}
+            {!user?.premium && <h2 className="text-red-600">*Only for premium user</h2>}
+          </label>
+          <input
+            onFocus={() => {
+              if (user?.premium) {
+                setShowSaveSpotifyEmbedButton(true)
+              }
+            }}
+            onChange={(e) => setSpotifyEmbedLink(e.target.value.trim())}
+            placeholder="Spotify link"
+            disabled={!user?.premium}
+            value={spotifyEmbedLink!}
+            className="bg-button-background selection:color-white box-border inline-flex resize-none appearance-none items-center justify-center rounded-md bg-opacity-10 p-2 text-sm  font-semibold outline-none"
+          />
+          {showSaveSpotifyEmbedButton && (
+            <button
+              onClick={saveSpotifyEmbed}
+              className="bg-button-background border-button-background w-fit rounded-md border bg-opacity-10 p-2 font-extrabold "
+            >
+              Save
+            </button>
+          )}
         </div>
       </div>
       <Toaster />

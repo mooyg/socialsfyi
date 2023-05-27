@@ -33,6 +33,12 @@ export function Tabs({ user, uploads }: Tabs) {
         </RadixTabs.Trigger>
         <RadixTabs.Trigger
           className="p-2 font-bold data-[state=active]:rounded-lg data-[state=active]:bg-black data-[state=active]:bg-opacity-40 data-[state=active]:p-2"
+          value="premium-tab"
+        >
+          Premium
+        </RadixTabs.Trigger>
+        <RadixTabs.Trigger
+          className="p-2 font-bold data-[state=active]:rounded-lg data-[state=active]:bg-black data-[state=active]:bg-opacity-40 data-[state=active]:p-2"
           value="account-tab"
         >
           Account
@@ -45,7 +51,10 @@ export function Tabs({ user, uploads }: Tabs) {
         <UploadsTabs user={user} uploads={uploads} />
       </RadixTabs.Content>
       <RadixTabs.Content value="socials-tab">
-        <SocialsTab />
+        <SocialsTab user={user} />
+      </RadixTabs.Content>
+      <RadixTabs.Content value="premium-tab">
+        <p>{user?.premium ? 'Already Premium User' : 'Subscribe to premium'}</p>
       </RadixTabs.Content>
       <RadixTabs.Content value="account-tab">
         <p>SETTINGS HERE</p>

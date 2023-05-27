@@ -5,7 +5,13 @@ export interface User {
   discordId?: string
   discordUsername?: string
   avatar?: string
-  card?: UserCard
+  spotifyURL?: string
+  githubURL?: string
+  instagramURL?: string
+  twitterURL?: string
+  youtubeURL?: string
+  premium: boolean
+  card: UserCard
 }
 
 export interface UserSlice {
@@ -23,6 +29,13 @@ export interface UserCard {
   viewCountEnabled: boolean
   colorBackground: string
   userId: string
+  premiumFeatures: PremiumFeatures
+}
+export interface PremiumFeatures {
+  id: string
+  colorBackground: string
+  spotifyEmbed: null
+  cardId: string
 }
 
 export interface UserUploads {

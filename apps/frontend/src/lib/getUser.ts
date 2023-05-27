@@ -8,6 +8,7 @@ export async function getUser(token: RequestCookie | undefined) {
       .post('users/me', {
         headers: {
           Cookie: `${token?.name}=${token?.value}`,
+          cache: 'no-store',
         },
       })
       .json<User>()

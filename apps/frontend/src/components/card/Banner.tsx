@@ -1,12 +1,16 @@
 'use client'
 
+import { User } from '@/types'
 import * as Avatar from '@radix-ui/react-avatar'
-export function CardBanner() {
+export interface CardBanner {
+  user: User | undefined
+}
+export function CardBanner({ user }: CardBanner) {
   return (
-    <Avatar.Root className="inline-flex select-none items-center justify-center overflow-hidden rounded-md align-middle ">
+    <Avatar.Root className="inline-flex h-[200px]  select-none items-center justify-center overflow-hidden rounded-md align-middle">
       <Avatar.Image
         className="h-full w-full rounded-[inherit] object-cover"
-        src={`http://localhost:8000/image/3f66dce0-1239-48e1-9d22-ac34323fc1ee`}
+        src={`http://localhost:8000/image/${user?.card.cardBanner}`}
         alt="Colm Tuite"
         draggable="false"
       />

@@ -20,17 +20,16 @@ model User {
   discordId       String?  @unique
   card            Card?
   uploads         Uploads[]
+  premium Boolean @default(false)
   apiKey String?
-  socials Socials[]
+  spotifyURL String?
+  githubURL String?
+  youtubeURL String?
+  twitterURL String?
+  instagramURL String?
 } 
 
-model Socials{
-  id String @default(uuid()) @id
-  socialMedia SocialMediaType?
-  socialLink String?
-  user User? @relation(fields: [userId], references: [id])
-  userId String?
-}
+
 
 model Card {
   id                 String  @id @default(uuid())
@@ -40,9 +39,17 @@ model Card {
   password           String?
   viewCount          Int?    @default(0)
   viewCountEnabled   Boolean @default(false)
-  colorBackground    String  @default("#aabbcc")
   user               User    @relation(fields: [userId], references: [id])
   userId             String  @unique
+  premiumFeatures PremiumFeatures?
+}
+
+model PremiumFeatures {
+  id String @id @default(uuid())
+  colorBackground String  @default("#aabbcc")
+  spotifyEmbed String?
+  card Card @relation(fields: [cardId], references: [id])
+  cardId String @unique
 }
 
 model Uploads {
@@ -60,10 +67,3 @@ model Session {
 }
 
 
-enum SocialMediaType{
-  SPOTIFY
-  GITHUB
-  TWITTER
-  INSTAGRAM
-  YOUTUBE
-}

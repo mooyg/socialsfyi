@@ -6,6 +6,7 @@ import { UpdateShowViewCountDto } from './dto/update-user-card-viewcount'
 import { EnablePasswordProtectionDto } from './dto/enable-password-protection.dto'
 import { DisablePasswordProtectionDto } from './dto/disable-password-protection.dto'
 import { UpdateCardColorDto } from './dto/update-card-color.dto'
+import { UpdateCardSpotifyEmbedDto } from './dto/update-card-spotify-embed.dto'
 
 @Controller('card')
 export class CardController {
@@ -61,6 +62,15 @@ export class CardController {
     }
   }
 
+  @Post('/update/spotify/embed')
+  @UseGuards(AuthenticatedGuard)
+  async updateCardSpotifyEmbed(@Body() updateCardSpotifyEmbedDto: UpdateCardSpotifyEmbedDto) {
+    try {
+      return await this._cardService.updateCardSpotifyEmbed(updateCardSpotifyEmbedDto)
+    } catch {
+      throw new NotFoundException()
+    }
+  }
   @Get('/:username')
   async getCardByUsername(@Param('username') username: string) {
     return await this._cardService.getCardByUsername(username)

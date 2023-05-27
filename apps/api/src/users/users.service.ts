@@ -3,6 +3,9 @@ import { CreateDiscordUserDto, CreateUserDto } from './dto/create-user.dto'
 import { PrismaService } from 'src/prisma'
 import { compare, hash } from 'bcrypt'
 import { uid } from 'uid'
+import { SocialMediaType, UpdateUserSocialDto } from './dto/upade-user-social.dto'
+
+import {} from '@prisma/client'
 @Injectable()
 export class UsersService {
   constructor(private readonly _prisma: PrismaService) {}
@@ -14,10 +17,11 @@ export class UsersService {
         password: hashedPassword,
         username: createUserDto.username,
         card: {
-          create: {},
-        },
-        socials: {
-          create: {},
+          create: {
+            premiumFeatures: {
+              create: {},
+            },
+          },
         },
       },
     })
@@ -32,10 +36,11 @@ export class UsersService {
         discordId: createDiscordUserDto.discordId,
         discordUsername: createDiscordUserDto.discordUsername,
         card: {
-          create: {},
-        },
-        socials: {
-          create: {},
+          create: {
+            premiumFeatures: {
+              create: {},
+            },
+          },
         },
       },
     })
@@ -53,10 +58,29 @@ export class UsersService {
         id,
       },
       include: {
-        card: true,
-        socials: true,
+        card: {
+          include: {
+            premiumFeatures: false,
+          },
+        },
       },
     })
+    if (user.premium) {
+      const premiumUser = await this._prisma.user.findFirst({
+        where: {
+          id,
+        },
+        include: {
+          card: {
+            include: {
+              premiumFeatures: true,
+            },
+          },
+        },
+      })
+      delete premiumUser.password
+      return premiumUser
+    }
     delete user.password
     return user
   }
@@ -68,7 +92,6 @@ export class UsersService {
       },
       include: {
         card: true,
-        socials: true,
       },
     })
     return user
@@ -125,5 +148,59 @@ export class UsersService {
     const isKeyValid = await compare(key, user.apiKey)
     console.log(isKeyValid)
     return isKeyValid
+  }
+  async updateUserSocial(updateUserSocialDto: UpdateUserSocialDto) {
+    switch (updateUserSocialDto.socialMediaType.toString().toUpperCase()) {
+      case 'GITHUB': {
+        return await this._prisma.user.update({
+          where: {
+            id: updateUserSocialDto.userId,
+          },
+          data: {
+            githubURL: updateUserSocialDto.socialMediaLink,
+          },
+        })
+      }
+      case 'SPOTIFY': {
+        return await this._prisma.user.update({
+          where: {
+            id: updateUserSocialDto.userId,
+          },
+          data: {
+            spotifyURL: updateUserSocialDto.socialMediaLink,
+          },
+        })
+      }
+      case 'INSTAGRAM': {
+        return await this._prisma.user.update({
+          where: {
+            id: updateUserSocialDto.userId,
+          },
+          data: {
+            instagramURL: updateUserSocialDto.socialMediaLink,
+          },
+        })
+      }
+      case 'TWITTER': {
+        return await this._prisma.user.update({
+          where: {
+            id: updateUserSocialDto.userId,
+          },
+          data: {
+            twitterURL: updateUserSocialDto.socialMediaLink,
+          },
+        })
+      }
+      case 'YOUTUBE': {
+        return await this._prisma.user.update({
+          where: {
+            id: updateUserSocialDto.userId,
+          },
+          data: {
+            youtubeURL: updateUserSocialDto.socialMediaLink,
+          },
+        })
+      }
+    }
   }
 }
