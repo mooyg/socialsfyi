@@ -43,7 +43,9 @@ export default async function CardPage({
         <div
           className={` border-button-background flex w-[512px] max-w-lg flex-col space-x-2 space-y-2 rounded-3xl border p-8`}
           style={{
-            backgroundColor: user?.card.premiumFeatures.colorBackground,
+            backgroundColor: user?.card.premiumFeatures.colorBackground
+              ? user?.card.premiumFeatures.colorBackground
+              : '',
           }}
         >
           <div className="relative flex flex-col items-center justify-center">

@@ -8,6 +8,7 @@ import { CardModule } from './card/card.module'
 import { UploadsModule } from './uploads/uploads.module'
 import { MulterModule } from '@nestjs/platform-express'
 import { ImageModule } from './image/image.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ImageModule } from './image/image.module';
     UploadsModule,
     MulterModule.register(),
     ImageModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

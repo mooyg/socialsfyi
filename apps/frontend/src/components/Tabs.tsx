@@ -4,6 +4,7 @@ import { CustomiseTab } from '@/components/CustomiseTab'
 import { User, UserUploads } from '@/types'
 import { UploadsTabs } from './UploadsTab'
 import { SocialsTab } from './SocialsTab'
+import { PremiumTab } from './PremiumTab'
 
 interface Tabs {
   user: User | undefined
@@ -54,7 +55,7 @@ export function Tabs({ user, uploads }: Tabs) {
         <SocialsTab user={user} />
       </RadixTabs.Content>
       <RadixTabs.Content value="premium-tab">
-        <p>{user?.premium ? 'Already Premium User' : 'Subscribe to premium'}</p>
+        <PremiumTab user={user} />
       </RadixTabs.Content>
       <RadixTabs.Content value="account-tab">
         <p>SETTINGS HERE</p>

@@ -8,10 +8,13 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const token = cookies().get('connect.sid')
+  const user = await getUser(token)
+
   return (
     <html lang="en">
       <body className="p-2">
-        <Navbar />
+        <Navbar user={user} />
         {children}
       </body>
     </html>
