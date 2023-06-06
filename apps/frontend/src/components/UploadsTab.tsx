@@ -1,7 +1,8 @@
 import ky from '@/ky'
 import { User, UserUploads } from '@/types'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
-import { useState } from 'react'
+import { redirect } from 'next/navigation'
+import { ChangeEvent, useCallback, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
 interface UploadsTab {
@@ -11,7 +12,35 @@ interface UploadsTab {
 
 export function UploadsTabs({ uploads, user }: UploadsTab) {
   const [file, setFile] = useState<File>()
+  const [successfullUpload, setSuccessfullUpload] = useState(false)
 
+  const uploadFile = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFile(e.target.files![0])
+      const form = new FormData()
+      if (!e.target.files![0]) {
+        throw new Error('No file')
+      }
+      form.append('file', e.target.files![0])
+      form.append('userId', user?.id!)
+      ky.post('uploads/file', {
+        body: form,
+      })
+        .json()
+        .then(() => {
+          toast.success('Uploaded your image to the server.')
+          setSuccessfullUpload(true)
+        })
+        .catch((e) => {
+          toast.error('Some Error occured')
+        })
+    },
+    [setSuccessfullUpload]
+  )
+
+  if (successfullUpload) {
+    redirect('/uploads')
+  }
   return (
     <>
       <div className="mt-2 flex flex-col space-y-4">
@@ -21,32 +50,7 @@ export function UploadsTabs({ uploads, user }: UploadsTab) {
               <h2 className="text-2xl font-bold">Uploads</h2>
               <label className="bg-button-background border-button-background w-fit cursor-pointer rounded-2xl border bg-opacity-10 p-2 font-bold ">
                 Upload File
-                <input
-                  onChange={(e) => {
-                    setFile(e.target.files![0])
-                    const form = new FormData()
-                    if (!e.target.files![0]) {
-                      throw new Error('No file')
-                    }
-                    form.append('file', e.target.files![0])
-                    form.append('userId', user?.id!)
-                    ky.post('uploads/file', {
-                      body: form,
-                    })
-                      .json()
-                      .then(() => {
-                        console.log('?')
-                        toast.success('Uploaded your image to the server.')
-                        window.location.reload()
-                      })
-                      .catch(() => {
-                        toast.error('Some Error occured')
-                      })
-                  }}
-                  type="file"
-                  className="hidden"
-                  multiple={false}
-                />
+                <input onChange={uploadFile} type="file" className="hidden" multiple={false} />
               </label>
             </div>
             {uploads?.map((upload) => {

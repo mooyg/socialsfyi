@@ -1,5 +1,4 @@
 import { Tabs } from '@/components/Tabs'
-import ky from '@/ky'
 import { getUploads } from '@/lib/getUploads'
 import { getUser } from '@/lib/getUser'
 import { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
