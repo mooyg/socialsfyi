@@ -1,7 +1,7 @@
 {
   "extends": "@socialsfyi/tsconfig/tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Node",
     "lib": ["ESNext"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
