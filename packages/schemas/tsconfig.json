@@ -4,9 +4,9 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "declaration": true,
-    "declarationDir": "./dist/types",
     "rootDir": "./src",
     "esModuleInterop": true,
     "module": "CommonJS"
-  }
+  },
+  "exclude": ["node_modules", "__tests__", "dist", "build", ".turbo"]
 }
