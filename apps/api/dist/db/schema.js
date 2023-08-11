@@ -23,7 +23,11 @@ const _pgcore = require("drizzle-orm/pg-core");
 const user = (0, _pgcore.pgTable)("auth_user", {
     id: (0, _pgcore.varchar)("id", {
         length: 15
-    }).primaryKey()
+    }).primaryKey(),
+    name: (0, _pgcore.varchar)("name", {
+        length: 100
+    }).notNull(),
+    email: (0, _pgcore.varchar)("email").notNull().unique()
 });
 const session = (0, _pgcore.pgTable)("user_session", {
     id: (0, _pgcore.varchar)("id", {

@@ -4,6 +4,10 @@ export const user = pgTable("auth_user", {
   id: varchar("id", {
     length: 15,
   }).primaryKey(),
+  name: varchar("name", {
+    length: 100,
+  }).notNull(),
+  email: varchar("email").notNull().unique(),
 });
 
 export const session = pgTable("user_session", {
