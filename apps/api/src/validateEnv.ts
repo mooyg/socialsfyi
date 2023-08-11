@@ -1,7 +1,6 @@
 import { Logger, OnModuleInit } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { serverEnvSchema } from "@socialsfyi/types";
-
+import { serverEnvSchema } from "@socialsfyi/schemas";
 export class ValidateEnv implements OnModuleInit {
   async onModuleInit() {
     try {
@@ -10,6 +9,8 @@ export class ValidateEnv implements OnModuleInit {
       if (!validatedEnv.success) {
         Logger.error("env validation error", validatedEnv.error);
       }
-    } catch (e) {}
+    } catch (e) {
+      Logger.error("env validation error");
+    }
   }
 }

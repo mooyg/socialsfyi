@@ -4,6 +4,11 @@
     "build": {
       "outputs": ["dist/**"]
     },
-    "dev": { "cache": false, "persistent": true }
+    "build:schema": {},
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["^build:schema"]
+    }
   }
 }

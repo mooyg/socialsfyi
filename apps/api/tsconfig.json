@@ -4,6 +4,7 @@
     "moduleResolution": "Node",
     "lib": ["ESNext"],
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true
   }
 }

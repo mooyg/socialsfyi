@@ -60,12 +60,12 @@ importers:
       '@nestjs/platform-express':
         specifier: ^10.1.3
         version: 10.1.3(@nestjs/common@10.1.3)(@nestjs/core@10.1.3)
+      '@socialsfyi/schemas':
+        specifier: '*'
+        version: link:../../packages/schemas
       '@socialsfyi/tsconfig':
         specifier: '*'
         version: link:../../packages/tsconfig
-      '@socialsfyi/types':
-        specifier: '*'
-        version: link:../../packages/types
       '@swc/cli':
         specifier: ^0.1.62
         version: 0.1.62(@swc/core@1.3.76)
@@ -128,13 +128,17 @@ importers:
         specifier: ^4.4.5
         version: 4.4.5
 
-  packages/tsconfig: {}
-
-  packages/types:
+  packages/schemas:
     dependencies:
       zod:
         specifier: ^3.21.4
         version: 3.21.4
+    devDependencies:
+      '@socialsfyi/tsconfig':
+        specifier: '*'
+        version: link:../tsconfig
+
+  packages/tsconfig: {}
 
   packages/ui:
     devDependencies:

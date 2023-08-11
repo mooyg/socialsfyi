@@ -1,0 +1,21 @@
+{
+  "name": "@socialsfyi/schemas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "keywords": [],
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build:schema": "tsc"
+  },
+  "dependencies": {
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@socialsfyi/tsconfig": "*"
+  }
+}
