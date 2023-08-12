@@ -11,9 +11,9 @@ Object.defineProperty(exports, "AppModule", {
 const _common = require("@nestjs/common");
 const _appservices = require("./app.services");
 const _appcontroller = require("./app.controller");
-const _validateEnv = require("./validateEnv");
 const _config = require("@nestjs/config");
 const _nestjspino = require("nestjs-pino");
+const _authmodule = require("./auth/auth.module");
 function _ts_decorate(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -25,6 +25,9 @@ let AppModule = class AppModule {
 AppModule = _ts_decorate([
     (0, _common.Module)({
         imports: [
+            _config.ConfigModule.forRoot({
+                isGlobal: true
+            }),
             _nestjspino.LoggerModule.forRoot({
                 pinoHttp: {
                     transport: {
@@ -32,8 +35,7 @@ AppModule = _ts_decorate([
                     }
                 }
             }),
-            _config.ConfigModule.forRoot(),
-            _validateEnv.ValidateEnv
+            _authmodule.AuthModule
         ],
         controllers: [
             _appcontroller.AppController

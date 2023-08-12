@@ -4,7 +4,9 @@
     "build": {
       "outputs": ["dist/**"]
     },
-    "build:schema": {},
+    "build:schema": {
+      "cache": false
+    },
     "dev": {
       "cache": false,
       "persistent": true,
