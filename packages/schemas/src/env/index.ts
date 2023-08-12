@@ -7,6 +7,7 @@ export const serverEnvSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).optional(),
   DISCORD_CALLBACK_URL: z.string(),
   CLIENT_URL: z.string(),
+  SESSION_SECRET: z.string(),
 });
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;

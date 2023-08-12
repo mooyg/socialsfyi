@@ -10,11 +10,7 @@ export class AuthController {
 
   @Get("/discord/callback")
   @UseGuards(AuthGuard("discord"))
-  async discordAuthCallback(@Req() request: Request, @Res() res: Response) {
-    const { user } = request;
-
-    return {
-      message: user,
-    };
+  async discordAuthCallback(@Req() _request: Request, @Res() res: Response) {
+    res.redirect("http://localhost:3000");
   }
 }

@@ -1,44 +1,13 @@
-import { InferModel } from "drizzle-orm";
-import { pgTable, bigint, varchar } from "drizzle-orm/pg-core";
+import { InferModel, sql } from "drizzle-orm";
+import { pgTable, varchar, uuid } from "drizzle-orm/pg-core";
 
-export const user = pgTable("auth_user", {
-  id: varchar("id", {
-    length: 15,
-  }).primaryKey(),
-  name: varchar("name", {
-    length: 100,
-  }).notNull(),
-  email: varchar("email").notNull().unique(),
+export const users = pgTable("users", {
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .primaryKey(),
+  name: varchar("name").notNull(),
+  email: varchar("email").notNull(),
+  discordId: varchar("discord_id").notNull().unique(),
+  pfp: varchar("pfp"),
 });
-export type User = InferModel<typeof user, "select">;
-
-export const session = pgTable("user_session", {
-  id: varchar("id", {
-    length: 128,
-  }).primaryKey(),
-  userId: varchar("user_id", {
-    length: 15,
-  })
-    .notNull()
-    .references(() => user.id),
-  activeExpires: bigint("active_expires", {
-    mode: "number",
-  }).notNull(),
-  idleExpires: bigint("idle_expires", {
-    mode: "number",
-  }).notNull(),
-});
-
-export const key = pgTable("user_key", {
-  id: varchar("id", {
-    length: 255,
-  }).primaryKey(),
-  userId: varchar("user_id", {
-    length: 15,
-  })
-    .notNull()
-    .references(() => user.id),
-  hashedPassword: varchar("hashed_password", {
-    length: 255,
-  }),
-});
+export type User = InferModel<typeof users, "select">;

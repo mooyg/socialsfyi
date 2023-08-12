@@ -1,6 +1,6 @@
 import { Pool } from "pg";
-import { ENV } from "../main";
+import "dotenv/config";
 
 export const pool = new Pool({
-  connectionString: ENV.DB_URL,
+  connectionString: process.env.DB_URL,
 });

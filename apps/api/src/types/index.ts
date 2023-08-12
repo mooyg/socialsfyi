@@ -1,6 +1,7 @@
 import { NodePgDatabase } from "drizzle-orm/node-postgres";
+import * as schema from "@socialsfyi/api/db/schema";
 
-export type Drizzle = NodePgDatabase;
+export type Drizzle = NodePgDatabase<typeof schema>;
 export interface DiscordProfile {
   id: string;
   username: string;
@@ -22,3 +23,4 @@ export interface DiscordProfile {
   accessToken: string;
   fetchedAt: Date;
 }
+export type Done = (err: Error | null, user: schema.User | null) => void;
