@@ -1,14 +1,14 @@
 import { Injectable, Logger, OnModuleInit } from "@nestjs/common";
 import { PostgresJsDatabase, drizzle as orm } from "drizzle-orm/postgres-js";
-import { Client } from "pg";
+import { Pool } from "pg";
 import { ENV } from "./main";
 @Injectable()
 export class Drizzle implements OnModuleInit {
-  private pgClient: Client;
+  private pgClient: Pool;
   drizzle: PostgresJsDatabase<Record<string, never>> | undefined;
 
   constructor() {
-    this.pgClient = new Client({
+    this.pgClient = new Pool({
       connectionString: ENV.DB_URL,
     });
   }

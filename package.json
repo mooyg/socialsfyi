@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "turbo dev",
     "prepare": "husky install",
-    "build:schema": "turbo build:schema"
+    "build:schema": "turbo build:schema",
+    "db:migrate": "turbo run db:migrate",
+    "db:push": "turbo run db:push",
+    "db:migrate-apply": "turbo run db:migrate-apply"
   },
   "keywords": [],
   "author": "",
