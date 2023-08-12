@@ -7,11 +7,6 @@
     "build:schema": {
       "cache": false
     },
-    "dev": {
-      "cache": false,
-      "persistent": true,
-      "dependsOn": ["^build:schema"]
-    },
     "db:push": {
       "cache": false
     },
@@ -20,6 +15,11 @@
     },
     "db:migrate-apply": {
       "cache": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["build:schema", "db:migrate-apply"]
     }
   }
 }
