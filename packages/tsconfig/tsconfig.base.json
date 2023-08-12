@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
     "strict": true,
     "noImplicitAny": true,
     "useUnknownInCatchVariables": true,

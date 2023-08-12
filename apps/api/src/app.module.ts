@@ -1,10 +1,8 @@
 import { Module } from "@nestjs/common";
 import { AppService } from "./app.services";
-import { AppController } from "./app.controller";
 import { ConfigModule } from "@nestjs/config";
 import { LoggerModule } from "nestjs-pino";
-import { AuthModule } from "./auth/auth.module";
-import { DrizzleModule } from "./nest-drizzle/drizzle.module";
+import { AppController } from "./app.controller";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -17,8 +15,6 @@ import { DrizzleModule } from "./nest-drizzle/drizzle.module";
         },
       },
     }),
-    AuthModule,
-    DrizzleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

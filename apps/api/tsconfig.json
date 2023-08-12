@@ -1,15 +1,24 @@
 {
   "extends": "@socialsfyi/tsconfig/tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "Node",
-    "lib": ["ESNext"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true
+    "rootDir": "./src",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "nodenext",
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "dist",
+    "declarationMap": true,
+    "baseUrl": "."
   },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
+  "exclude": [
+    "node_modules",
+    "__tests__",
+    "dist",
+    "build",
+    ".turbo",
+    "drizzle.config.ts"
+  ]
 }

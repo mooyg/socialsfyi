@@ -6,7 +6,8 @@
     "declaration": true,
     "rootDir": "./src",
     "esModuleInterop": true,
-    "module": "CommonJS"
+    "module": "ESNext",
+    "target": "ESNext"
   },
   "exclude": ["node_modules", "__tests__", "dist", "build", ".turbo"]
 }
