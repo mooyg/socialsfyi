@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
-import { AppService } from "./app.services";
 import { ConfigModule } from "@nestjs/config";
 import { LoggerModule } from "nestjs-pino";
-import { AppController } from "./app.controller";
+import { AppController } from "@socialsfyi/api/app.controller";
+import { AppService } from "@socialsfyi/api/app.service";
 @Module({
   imports: [
     ConfigModule.forRoot({

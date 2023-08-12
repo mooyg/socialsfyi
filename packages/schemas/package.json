@@ -7,6 +7,9 @@
   "exports": {
     ".": "./dist/index.js"
   },
+  "scripts": {
+    "build:schema": "tsc"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "dev": "nest start --watch",
+    "dev": "rm -rf dist && nest start -b swc --type-check --watch",
     "db:push": "drizzle-kit push:pg --config ./drizzle.config.ts",
     "db:migrate": "drizzle-kit generate:pg --config ./drizzle.config.ts",
     "db:migrate-apply": "tsx ./src/db/migrate.ts"

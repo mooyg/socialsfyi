@@ -1,8 +1,8 @@
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
 import { Logger as PinoLogger } from "nestjs-pino";
 import { config } from "dotenv";
 import { serverEnvSchema } from "@socialsfyi/schemas";
+import { AppModule } from "@socialsfyi/api/app.module";
 
 config();
 

@@ -4,6 +4,9 @@
     "build": {
       "outputs": ["dist/**"]
     },
+    "build:schema": {
+      "cache": false
+    },
     "db:push": {
       "cache": false
     },
@@ -16,7 +19,7 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "dependsOn": ["db:migrate-apply"]
+      "dependsOn": ["db:migrate-apply", "build:schema"]
     }
   }
 }
