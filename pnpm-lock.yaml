@@ -146,6 +146,9 @@ importers:
       '@socialsfyi/tsconfig':
         specifier: '*'
         version: link:../tsconfig
+      typescript:
+        specifier: ^5.0.2
+        version: 5.1.6
 
   packages/tsconfig: {}
 

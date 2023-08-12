@@ -16,6 +16,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@socialsfyi/tsconfig": "*"
+    "@socialsfyi/tsconfig": "*",
+    "typescript": "^5.0.2"
   }
 }
