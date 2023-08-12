@@ -1,3 +1,4 @@
+import { InferModel } from "drizzle-orm";
 import { pgTable, bigint, varchar } from "drizzle-orm/pg-core";
 
 export const user = pgTable("auth_user", {
@@ -9,6 +10,7 @@ export const user = pgTable("auth_user", {
   }).notNull(),
   email: varchar("email").notNull().unique(),
 });
+export type User = InferModel<typeof user, "select">;
 
 export const session = pgTable("user_session", {
   id: varchar("id", {

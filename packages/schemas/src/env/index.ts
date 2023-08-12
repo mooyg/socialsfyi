@@ -6,6 +6,7 @@ export const serverEnvSchema = z.object({
   DB_URL: z.string(),
   NODE_ENV: z.enum(["development", "production", "test"]).optional(),
   DISCORD_CALLBACK_URL: z.string(),
+  CLIENT_URL: z.string(),
 });
 
 export type ServerEnv = z.infer<typeof serverEnvSchema>;

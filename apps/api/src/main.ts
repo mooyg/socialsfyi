@@ -11,7 +11,12 @@ export const ENV = serverEnvSchema.parse(process.env);
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
+    cors: {
+      credentials: true,
+      origin: ENV.CLIENT_URL,
+    },
   });
+  app.setGlobalPrefix("api");
 
   app.useLogger(app.get(PinoLogger));
 
