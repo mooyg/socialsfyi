@@ -45,6 +45,7 @@
     "@types/passport": "^1.0.12",
     "@types/pg": "^8.10.2",
     "drizzle-kit": "^0.19.12",
-    "tsx": "^3.12.7"
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.2"
   }
 }
