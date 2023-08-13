@@ -45,9 +45,10 @@ export class AuthService {
       })
       .returning();
   }
-  async findUser(discordId: string) {
+  async findUser(id: string) {
+    console.log(id, "findUser");
     return await this._drizzle.query.users.findFirst({
-      where: eq(users.discordId, discordId),
+      where: eq(users.id, id),
     });
   }
 }

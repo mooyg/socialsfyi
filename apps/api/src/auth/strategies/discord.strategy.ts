@@ -2,7 +2,7 @@ import { PassportStrategy } from "@nestjs/passport";
 import { ENV } from "@socialsfyi/api/main";
 import { Profile, Strategy } from "passport-discord";
 import { AuthService } from "../auth.service";
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { Done } from "@socialsfyi/api/types";
 
 @Injectable()
@@ -26,7 +26,7 @@ export class DiscordStrategy extends PassportStrategy(Strategy, "discord") {
       throw new Error("No email provided by Discord");
     }
     const user = await this._authService.validateUser(profile);
-    Logger.log(user, "DiscordStrategy");
+    console.log(user, "DiscordStrategy");
 
     done(null, user);
   }

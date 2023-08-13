@@ -13,7 +13,9 @@ import { AuthModule } from "@socialsfyi/api/auth/auth.module";
       pinoHttp: {
         transport: {
           target: "pino-pretty",
-          options: {},
+          options: {
+            singleLine: true,
+          },
         },
       },
     }),
