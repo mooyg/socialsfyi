@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Req, Res, UseGuards } from "@nestjs/common";
+import { Controller, Get, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Request, Response } from "express";
 
@@ -13,9 +13,9 @@ export class AuthController {
   async discordAuthCallback(@Req() request: Request, @Res() res: Response) {
     console.log(request.session, "DiscordAuthCallback");
     if (!request.user) return res.redirect("/discord/signin");
-    request.logIn(request.user, (e) => {
+    request.logIn(request.user, (e: Error) => {
       if (e) {
-        Logger.log(e);
+        console.error(e);
       } else {
         return res.redirect("api/auth/me");
       }
@@ -23,7 +23,6 @@ export class AuthController {
   }
 
   @Get("/me")
-  @UseGuards(AuthGuard("session"))
   async me(@Req() request: Request) {
     return {
       isAuthenticated: request.isAuthenticated(),

@@ -1,5 +1,5 @@
 import { InferModel, sql } from "drizzle-orm";
-import { pgTable, varchar, uuid } from "drizzle-orm/pg-core";
+import { pgTable, varchar, uuid, json, timestamp } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: uuid("id")
@@ -11,3 +11,9 @@ export const users = pgTable("users", {
   pfp: varchar("pfp"),
 });
 export type User = InferModel<typeof users, "select">;
+
+export const sessions = pgTable("user_sessions", {
+  sid: varchar("sid").primaryKey(),
+  sess: json("sess").notNull(),
+  expire: timestamp("expire").notNull(),
+});

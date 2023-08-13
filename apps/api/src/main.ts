@@ -7,11 +7,8 @@ import { serverEnvSchema } from "@socialsfyi/schemas";
 import { AppModule } from "@socialsfyi/api/app.module";
 import session from "express-session";
 import passport from "passport";
-import { DrizzleSessionStore } from "./nest-drizzle/drizzle-session.store";
 import { pool } from "./db/pool";
-import * as schema from "@socialsfyi/api/db/schema";
-
-
+import PG_SESSION from "connect-pg-simple";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
@@ -22,6 +19,7 @@ async function bootstrap(): Promise<void> {
     },
   });
   app.setGlobalPrefix("api");
+  const pgSession = PG_SESSION(session);
   app.use(
     session({
       secret: ENV.SESSION_SECRET,
@@ -32,7 +30,10 @@ async function bootstrap(): Promise<void> {
         secure: false,
       },
       name: "socialsfyi-sid",
-      store: new DrizzleSessionStore(pool, schema),
+      store: new pgSession({
+        pool: pool,
+        tableName: "user_sessions",
+      }),
     })
   );
   app.use(passport.initialize());

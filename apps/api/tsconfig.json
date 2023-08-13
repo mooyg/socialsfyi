@@ -11,6 +11,7 @@
     "outDir": "dist",
     "baseUrl": ".",
     "rootDir": "./src",
+    "useUnknownInCatchVariables": true,
     "paths": {
       "@socialsfyi/api/*": ["./src/*"]
     }
