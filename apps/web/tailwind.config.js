@@ -6,6 +6,7 @@ export default {
       colors: {
         text: {
           primary: "#d5dbe4",
+          secondary: "#7E8DA2",
         },
         heading: {
           primary: "#8B728E",
@@ -14,7 +15,7 @@ export default {
           primary: "#030711",
         },
         button: {
-          primary: "#1D283A",
+          primary: "#0D1325",
         },
       },
     },
