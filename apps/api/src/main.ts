@@ -1,38 +1,48 @@
-import * as session from 'express-session'
-import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
-import { ValidationPipe } from '@nestjs/common'
-import * as passport from 'passport'
-import { PrismaClient } from '@prisma/client'
-import { PrismaSessionStore } from '@quixo3/prisma-session-store'
-import { config } from 'dotenv'
+import "dotenv/config";
+export const ENV = serverEnvSchema.parse(process.env);
 
-config()
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
-  app.enableCors({
-    credentials: true,
-    origin: process.env.FRONTEND_URL,
-  })
+import { NestFactory } from "@nestjs/core";
+import { Logger as PinoLogger } from "nestjs-pino";
+import { serverEnvSchema } from "@socialsfyi/schemas";
+import { AppModule } from "@socialsfyi/api/app.module";
+import session from "express-session";
+import passport from "passport";
+import { pool } from "./db/pool";
+import PG_SESSION from "connect-pg-simple";
 
-  app.useGlobalPipes(new ValidationPipe())
+async function bootstrap(): Promise<void> {
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+    cors: {
+      credentials: true,
+      origin: ENV.CLIENT_URL,
+    },
+  });
+  app.setGlobalPrefix("api");
+  const pgSession = PG_SESSION(session);
   app.use(
     session({
+      secret: ENV.SESSION_SECRET,
+      saveUninitialized: false,
+      resave: false,
       cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000, // ms
+        maxAge: 3600000 * 24,
+        secure: false,
       },
-      secret: process.env.SESSION_SECRET,
-      resave: true,
-      saveUninitialized: true,
-      store: new PrismaSessionStore(new PrismaClient(), {
-        checkPeriod: 2 * 60 * 1000, //ms
-        dbRecordIdIsSessionId: true,
-        dbRecordIdFunction: undefined,
+      name: "socialsfyi-sid",
+      store: new pgSession({
+        pool: pool,
+        tableName: "user_sessions",
       }),
     })
-  )
-  app.use(passport.initialize())
-  app.use(passport.session())
-  await app.listen(8000)
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  app.useLogger(app.get(PinoLogger));
+
+  app.enableShutdownHooks();
+
+  await app.listen(8000);
 }
-bootstrap()
+bootstrap();

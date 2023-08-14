@@ -1,21 +1,13 @@
-import { Module } from '@nestjs/common'
-import { AuthService } from './auth.service'
-import { AuthController } from './auth.controller'
-import { UsersService } from 'src/users/users.service'
-import { PrismaService } from 'src/prisma'
-import { LocalStrategy } from './strategies/local.strategy'
-import { UserSerializer } from './user.serializer'
-import { DiscordStrategy } from './strategies/discord.strategy'
+import { Module } from "@nestjs/common";
+import { AuthController } from "@socialsfyi/api/auth/auth.controller";
+import { AuthService } from "@socialsfyi/api/auth/auth.service";
+import { DiscordStrategy } from "@socialsfyi/api/auth/strategies/discord.strategy";
+import { DrizzleModule } from "@socialsfyi/api/nest-drizzle/drizzle.module";
+import { SessionSerializer } from "@socialsfyi/api/auth/session.serializer";
 
 @Module({
+  imports: [DrizzleModule],
+  providers: [AuthService, DiscordStrategy, SessionSerializer],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    PrismaService,
-    UsersService,
-    LocalStrategy,
-    UserSerializer,
-    DiscordStrategy,
-  ],
 })
 export class AuthModule {}

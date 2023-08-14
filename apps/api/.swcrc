@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "sourceMaps": true,
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "decorators": true,
+      "dynamicImport": true,
+      "dts": true
+    },
+    // "baseUrl": "./",
+    // "paths": {
+    //   "@socialsfyi/api/*": ["./src/*"]
+    // },
+    "transform": {
+      "decoratorMetadata": true
+    }
+  },
+  "exclude": [".*\\.js$", ".*\\.map$", "node_modules", "dist", "build"],
+  "minify": false,
+  "module": {
+    "type": "commonjs",
+    "strict": true
+  }
+}

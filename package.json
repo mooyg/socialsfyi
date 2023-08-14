@@ -1,16 +1,20 @@
 {
-  "private": true,
+  "name": "socialsfyi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "dev": "turbo dev",
+    "build:schema": "turbo build:schema",
+    "db:migrate": "turbo run db:migrate",
+    "db:push": "turbo run db:push",
+    "db:migrate-apply": "turbo run db:migrate-apply",
+    "db:studio": "cd ./apps/api && pnpm db:studio"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@turbo/gen": "^1.9.7",
-    "eslint": "^7.32.0",
-    "turbo": "^1.9.7"
-  },
-  "packageManager": "pnpm@7.15.0",
-  "name": "socialsfyi"
+    "turbo": "^1.10.12"
+  }
 }

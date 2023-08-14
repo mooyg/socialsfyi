@@ -1,0 +1,3 @@
+{
+  "extends": "@socialsfyi/tsconfig/tsconfig.base.json"
+}

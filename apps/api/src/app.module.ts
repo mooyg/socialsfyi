@@ -1,27 +1,25 @@
-import { Module } from '@nestjs/common'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
-import { AuthModule } from './auth/auth.module'
-import { UsersModule } from './users/users.module'
-import { PassportModule } from '@nestjs/passport'
-import { CardModule } from './card/card.module'
-import { UploadsModule } from './uploads/uploads.module'
-import { MulterModule } from '@nestjs/platform-express'
-import { ImageModule } from './image/image.module';
-import { PaymentsModule } from './payments/payments.module';
-
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { LoggerModule } from "nestjs-pino";
+import { AppController } from "@socialsfyi/api/app.controller";
+import { AppService } from "@socialsfyi/api/app.service";
+import { AuthModule } from "@socialsfyi/api/auth/auth.module";
 @Module({
   imports: [
-    AuthModule,
-    UsersModule,
-    PassportModule.register({
-      session: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
     }),
-    CardModule,
-    UploadsModule,
-    MulterModule.register(),
-    ImageModule,
-    PaymentsModule,
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          target: "pino-pretty",
+          options: {
+            singleLine: true,
+          },
+        },
+      },
+    }),
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

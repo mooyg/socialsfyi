@@ -1,21 +1,27 @@
 {
+  "extends": "@socialsfyi/tsconfig/tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "lib": ["esnext"],
+    "isolatedModules": false,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "emitDecoratorMetadata": true,
+    "declaration": true,
     "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "outDir": "dist",
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "useUnknownInCatchVariables": true,
+    "paths": {
+      "@socialsfyi/api/*": ["./src/*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "__tests__",
+    "dist",
+    "build",
+    ".turbo",
+    "drizzle.config.ts"
+  ]
 }

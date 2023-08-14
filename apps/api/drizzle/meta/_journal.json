@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1691850459225,
+      "tag": "0000_worried_the_captain",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1691923195283,
+      "tag": "0001_absent_hellcat",
+      "breakpoints": true
+    }
+  ]
+}

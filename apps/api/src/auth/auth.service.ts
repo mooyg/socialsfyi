@@ -1,23 +1,54 @@
-import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/prisma'
-import { SignInUserDto } from './dto/sign-in-user.dto'
-import { UsersService } from 'src/users/users.service'
-import { compare } from 'bcrypt'
+import { Inject, Injectable } from "@nestjs/common";
+import { Drizzle } from "../types";
+import { Profile } from "passport-discord";
+import { User, users } from "../db/schema";
+import { eq } from "drizzle-orm";
+import { DRIZZLE_ORM } from "@socialsfyi/api/constants";
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly _usersService: UsersService) {}
+  constructor(@Inject(DRIZZLE_ORM) private readonly _drizzle: Drizzle) {}
 
-  async signIn(signInUserDto: SignInUserDto) {
-    const user = await this._usersService.findByEmail(signInUserDto.email)
-    if (!user) {
-      throw new Error('No user found')
+  async validateUser(profile: Profile): Promise<User> {
+    const { id: discordId, username, email } = profile;
+    const isUser = await this._drizzle.query.users.findFirst({
+      where: eq(users.discordId, discordId),
+    });
+    if (!isUser) {
+      return (
+        await this.createUser({
+          discordId,
+          name: username,
+          email: email!,
+        })
+      )[0];
+    } else {
+      return isUser;
     }
-    const isPasswordCorrect = await compare(signInUserDto.password, user.password)
-    if (!isPasswordCorrect) {
-      throw new Error('Incorrect password')
-    }
-    delete user.password
-    return user
+  }
+
+  async createUser({
+    discordId,
+    name,
+    email,
+  }: {
+    discordId: string;
+    name: string;
+    email: string;
+  }): Promise<User[]> {
+    return await this._drizzle
+      .insert(users)
+      .values({
+        discordId: discordId,
+        name,
+        email,
+      })
+      .returning();
+  }
+  async findUser(id: string) {
+    console.log(id, "findUser");
+    return await this._drizzle.query.users.findFirst({
+      where: eq(users.id, id),
+    });
   }
 }

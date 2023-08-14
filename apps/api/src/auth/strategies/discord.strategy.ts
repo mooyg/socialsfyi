@@ -1,42 +1,33 @@
-import { PassportStrategy } from '@nestjs/passport'
-import { Strategy, VerifyCallback } from '@oauth-everything/passport-discord'
-import { config } from 'dotenv'
-import { DiscordProfile } from 'src/types'
-import { Injectable, UnauthorizedException } from '@nestjs/common'
-import { UsersService } from 'src/users/users.service'
-config()
+import { PassportStrategy } from "@nestjs/passport";
+import { ENV } from "@socialsfyi/api/main";
+import { Profile, Strategy } from "passport-discord";
+import { AuthService } from "../auth.service";
+import { Injectable } from "@nestjs/common";
+import { Done } from "@socialsfyi/api/types";
 
 @Injectable()
-export class DiscordStrategy extends PassportStrategy(Strategy, 'discord') {
-  constructor(private readonly _usersService: UsersService) {
+export class DiscordStrategy extends PassportStrategy(Strategy, "discord") {
+  constructor(private readonly _authService: AuthService) {
     super({
-      clientID: process.env.DISCORD_CLIENT_ID,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      callbackURL: process.env.DISCORD_CALLBACK_URL,
-      scope: process.env.DISCORD_SCOPES.split(' '),
-      successRedirect: 'http://localhost:8000/dashboard',
-    })
+      clientID: ENV.DISCORD_CLIENT_ID,
+      clientSecret: ENV.DISCORD_CLIENT_SECRET,
+      callbackURL: ENV.DISCORD_CALLBACK_URL,
+      scope: ["identify", "email"],
+    });
   }
+
   async validate(
     _accessToken: string,
     _refreshToken: string,
-    profile: DiscordProfile,
-    done: VerifyCallback
+    profile: Profile,
+    done: Done
   ) {
-    try {
-      const user = await this._usersService.findByDiscordId(profile.id)
-      if (!user) {
-        const createdUser = await this._usersService.createDiscordUser({
-          discordId: profile.id,
-          email: profile.email,
-          discordUsername: profile.username,
-        })
-
-        done(null, createdUser)
-      }
-      done(null, user)
-    } catch (e) {
-      done(e, null)
+    if (!profile.email) {
+      throw new Error("No email provided by Discord");
     }
+    const user = await this._authService.validateUser(profile);
+    console.log(user, "DiscordStrategy");
+
+    done(null, user);
   }
 }

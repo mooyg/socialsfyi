@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `Socials` MODIFY `socialMedia` ENUM('SPOTIFY', 'GITHUB', 'TWITTER', 'INSTAGRAM', 'YOUTUBE') NULL;
