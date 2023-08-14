@@ -1,6 +1,7 @@
 import { Controller, Get, Req, Res, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Request, Response } from "express";
+import { ENV } from "../main";
 
 @Controller("auth")
 export class AuthController {
@@ -17,15 +18,8 @@ export class AuthController {
       if (e) {
         console.error(e);
       } else {
-        return res.redirect("api/auth/me");
+        return res.redirect(ENV.CLIENT_URL);
       }
     });
-  }
-
-  @Get("/me")
-  async me(@Req() request: Request) {
-    return {
-      isAuthenticated: request.isAuthenticated(),
-    };
   }
 }

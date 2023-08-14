@@ -1,7 +1,7 @@
 import "dotenv/config";
 export const ENV = serverEnvSchema.parse(process.env);
 
-import { NestFactory } from "@nestjs/core";
+import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 import { Logger as PinoLogger } from "nestjs-pino";
 import { serverEnvSchema } from "@socialsfyi/schemas";
 import { AppModule } from "@socialsfyi/api/app.module";
@@ -9,6 +9,7 @@ import session from "express-session";
 import passport from "passport";
 import { pool } from "./db/pool";
 import PG_SESSION from "connect-pg-simple";
+import { CommonExceptionsFilter } from "./filters/common-exceptions.filter";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
@@ -39,10 +40,12 @@ async function bootstrap(): Promise<void> {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  app.useLogger(app.get(PinoLogger));
+  // app.useLogger(app.get(PinoLogger));
 
   app.enableShutdownHooks();
+  const { httpAdapter } = app.get(HttpAdapterHost);
 
+  app.useGlobalFilters(new CommonExceptionsFilter(httpAdapter));
   await app.listen(8000);
 }
 bootstrap();
