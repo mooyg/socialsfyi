@@ -2,7 +2,6 @@ import "dotenv/config";
 export const ENV = serverEnvSchema.parse(process.env);
 
 import { HttpAdapterHost, NestFactory } from "@nestjs/core";
-import { Logger as PinoLogger } from "nestjs-pino";
 import { serverEnvSchema } from "@socialsfyi/schemas";
 import { AppModule } from "@socialsfyi/api/app.module";
 import session from "express-session";
@@ -39,8 +38,6 @@ async function bootstrap(): Promise<void> {
   );
   app.use(passport.initialize());
   app.use(passport.session());
-
-  // app.useLogger(app.get(PinoLogger));
 
   app.enableShutdownHooks();
   const { httpAdapter } = app.get(HttpAdapterHost);
