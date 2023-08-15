@@ -35,6 +35,7 @@
       variant,
     }),
   )}
+  on:click
 >
   <slot />
 </button>

@@ -11,7 +11,7 @@ export class CommonExceptionsFilter
   implements ExceptionFilter
 {
   catch(exception: any, host: ArgumentsHost) {
-    switch (exception) {
+    switch (true) {
       case exception instanceof EntityNotFoundException: {
         return super.catch(new NotFoundException(exception.message), host);
       }
