@@ -11,3 +11,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: "Poppins", sans-serif;
 }
+::selection {
+  background-color: #7e8da2;
+}

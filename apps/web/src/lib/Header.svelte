@@ -1,11 +1,11 @@
 <script lang="ts">
   import { LogIn, UserIcon } from "lucide-svelte";
-  import Modal from "./ui/modal/Modal.svelte";
   import Button from "./ui/button/Button.svelte";
   import { SERVER_URL } from "./constants";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
-  let showModal: boolean = false;
+  import Modal from "./ui/modal/Modal.svelte";
+  let showModal = false;
 </script>
 
 <header
@@ -26,12 +26,12 @@
     <Button on:click={() => (showModal = true)}
       ><LogIn size={16} /><span>Login</span></Button
     >
-    <Modal bind:showModal>
+    <Modal bind:open={showModal}>
       <div
         class="p-6 px-10 bg-background-primary rounded-lg border flex flex-col gap-8"
       >
         <div class="flex flex-col gap-1">
-          <h2 class="font-bold text-white text-2xl">Login Modal</h2>
+          <h2 class="font-bold text-white text-2xl">Login</h2>
           <p class="text-text-secondary text-xs font-bold">
             Get started by logging in with your account
           </p>

@@ -12,6 +12,11 @@ export const users = pgTable("users", {
 });
 export type User = InferModel<typeof users, "select">;
 
+export const profiles = pgTable("profiles", {
+  id: uuid("id")
+    .default(sql`gen_random_uuid()`)
+    .primaryKey(),
+});
 export const sessions = pgTable("user_sessions", {
   sid: varchar("sid").primaryKey(),
   sess: json("sess").notNull(),
