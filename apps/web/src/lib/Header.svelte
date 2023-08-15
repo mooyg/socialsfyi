@@ -3,17 +3,25 @@
   import Modal from "./ui/modal/Modal.svelte";
   import Button from "./ui/button/Button.svelte";
   import { SERVER_URL } from "./constants";
+  import { goto } from "$app/navigation";
+  import { page } from "$app/stores";
   let showModal: boolean = false;
 </script>
 
 <header
   class="flex items-center justify-between border-b-2 border-button-primary p-3"
 >
-  <h2 class="font-bold text-2xl">
+  <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <h2 on:click={() => goto("/")} class="font-bold text-2xl cursor-pointer">
     SOCIALS.<span class="text-heading-primary"> FYI </span>
   </h2>
-  <!-- {#if user}
-    <Button><UserIcon /></Button>
+  {#if $page.data.user}
+    <a
+      href="/dashboard"
+      class="inline-flex font-bold bg-button-primary rounded-lg justify-center items-center text-sm gap-2 hover:bg-opacity-75 transition-all delay-75 p-2 text-white"
+      on:click={() => goto("/dashboard")}><UserIcon /></a
+    >
   {:else}
     <Button on:click={() => (showModal = true)}
       ><LogIn size={16} /><span>Login</span></Button
@@ -47,5 +55,5 @@
         >
       </div>
     </Modal>
-  {/if} -->
+  {/if}
 </header>
