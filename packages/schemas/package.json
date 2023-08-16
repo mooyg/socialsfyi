@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "drizzle-orm": "^0.28.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {

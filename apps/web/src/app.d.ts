@@ -10,6 +10,7 @@ declare global {
         pfp: string | null;
         email: string;
         discordId: string;
+        name: string;
       } | null;
     }
     interface PageData {
@@ -19,6 +20,7 @@ declare global {
         pfp: string | null;
         email: string;
         discordId: string;
+        name: string;
       } | null;
     }
     // interface Platform {}

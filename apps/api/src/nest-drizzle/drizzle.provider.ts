@@ -7,10 +7,10 @@ import * as schema from "@socialsfyi/api/db/schema";
 export const DrizzleProvider: FactoryProvider = {
   provide: DRIZZLE_ORM,
   useFactory: async () => {
-    Logger.debug("Connecting to database....");
+    Logger.log("Connecting to database....");
     await pool.connect();
 
-    Logger.debug("Connected to database.");
+    Logger.log("Connected to database.");
     return drizzle(pool, {
       schema: schema,
     });
