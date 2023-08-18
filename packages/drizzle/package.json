@@ -8,7 +8,8 @@
     "db:migrate": "drizzle-kit generate:pg --config ./drizzle.config.ts",
     "db:migrate-apply": "tsx ./migrate.ts",
     "db:studio": "drizzle-kit studio",
-    "preinstall": "tsc"
+    "preinstall": "tsc",
+    "build:schema": "tsc"
   },
   "exports": {
     ".": "./dist/index.js",
@@ -20,7 +21,9 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.2",
-    "pg": "^8.11.3"
+    "drizzle-zod": "^0.5.0",
+    "pg": "^8.11.3",
+    "zod": "^3.22.1"
   },
   "devDependencies": {
     "@socialsfyi/tsconfig": "*",
@@ -28,8 +31,5 @@
     "drizzle-kit": "^0.19.12",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
-  },
-  "files": [
-    "./dist/**/*.js"
-  ]
+  }
 }

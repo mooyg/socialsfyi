@@ -13,10 +13,17 @@
     "db:migrate-apply": {
       "cache": false
     },
+
+    "db:studio": {
+      "cache": false
+    },
+    "build:schema": {
+      "cache": false
+    },
     "dev": {
       "cache": false,
       "persistent": true,
-      "dependsOn": ["db:migrate-apply"]
+      "dependsOn": ["db:migrate-apply", "build:schema"]
     }
   }
 }

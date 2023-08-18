@@ -5,6 +5,6 @@ import { drizzle } from "@socialsfyi/drizzle";
 export const DrizzleProvider: FactoryProvider = {
   provide: DRIZZLE_ORM,
   useFactory: async () => {
-    return drizzle();
+    return await drizzle();
   },
 };

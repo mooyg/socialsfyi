@@ -1,6 +1,6 @@
 {
   "extends": "@socialsfyi/tsconfig/tsconfig.base.json",
-  "exclude": ["drizzle.config.ts"],
+  "exclude": ["drizzle.config.ts", "dist"],
   "compilerOptions": {
     "outDir": "dist/",
     "moduleResolution": "node",

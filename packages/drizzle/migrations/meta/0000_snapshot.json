@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "3c9a7fab-0a3d-4432-b4c9-7d9e52fd3e4f",
+  "id": "565c7632-a436-4661-bd5d-1247db596e93",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "profile": {
@@ -48,10 +48,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "profile_user_id_users_id_fk": {
-          "name": "profile_user_id_users_id_fk",
+        "profile_user_id_user_id_fk": {
+          "name": "profile_user_id_user_id_fk",
           "tableFrom": "profile",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
@@ -63,15 +63,7 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "profile_user_id_unique": {
-          "name": "profile_user_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "user_id"
-          ]
-        }
-      }
+      "uniqueConstraints": {}
     },
     "user_sessions": {
       "name": "user_sessions",
@@ -101,8 +93,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "users": {
-      "name": "users",
+    "user": {
+      "name": "user",
       "schema": "",
       "columns": {
         "id": {
@@ -123,12 +115,33 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "user_username_unique": {
+          "name": "user_username_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        },
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      }
     }
   },
   "enums": {

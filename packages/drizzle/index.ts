@@ -19,3 +19,4 @@ export const drizzle = async () => {
     logger: true,
   });
 };
+export { InsertUserSchema, insertUserSchema } from "./inserts/user";

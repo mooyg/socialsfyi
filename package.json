@@ -8,7 +8,8 @@
     "db:migrate": "turbo run db:migrate",
     "db:push": "turbo run db:push",
     "db:migrate-apply": "turbo run db:migrate-apply",
-    "db:studio": "cd ./apps/api && pnpm db:studio"
+    "db:studio": "turbo run db:studio",
+    "build:schema": "turbo run build:schema"
   },
   "keywords": [],
   "author": "",
