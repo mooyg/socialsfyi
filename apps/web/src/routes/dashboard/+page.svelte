@@ -16,7 +16,7 @@
         <input
           type="text"
           class="outline-none caret-black py-2 px-2 rounded-lg text-black font-semibold w-full"
-          value={user?.name}
+          value={user?.username}
           disabled={false}
         />
       </label>

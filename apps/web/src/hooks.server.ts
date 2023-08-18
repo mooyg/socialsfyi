@@ -12,8 +12,10 @@ export const handle = async ({ event, resolve }) => {
     method: "GET",
     headers: {
       Cookie: `socialsfyi-sid=${cookie};`,
+      "Content-type": "application/json",
     },
   });
+
   if (!res.ok) {
     event.locals.user = null;
     return resolve(event);
