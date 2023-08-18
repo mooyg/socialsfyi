@@ -1,5 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
+import type { SelectUserSchema } from "@socialsfyi/drizzle";
+
 declare global {
   namespace App {
     // interface Error {}
@@ -14,14 +16,7 @@ declare global {
       } | null;
     }
     interface PageData {
-      user: {
-        id: string;
-        username: string;
-        pfp: string | null;
-        email: string;
-        discordId: string;
-        name: string;
-      } | null;
+      user: SelectUserSchema | null;
     }
     // interface Platform {}
   }

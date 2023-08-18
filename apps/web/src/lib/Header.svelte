@@ -89,7 +89,7 @@
                 <input
                   name="username"
                   type="text"
-                  class=" rounded-lg p-2 text-black placeholder:text-xs"
+                  class=" rounded-lg p-2 text-black placeholder:text-xs outline-none"
                   placeholder="Enter your username"
                 />
               </label>
@@ -98,7 +98,7 @@
                 <input
                   name="password"
                   type="password"
-                  class=" rounded-lg p-2 text-black placeholder:text-xs"
+                  class="rounded-lg p-2 text-black placeholder:text-xs outline-none"
                   placeholder="Enter your password"
                 />
               </label>
@@ -121,7 +121,7 @@
                 <input
                   name="email"
                   type="email"
-                  class=" rounded-lg p-2 text-black placeholder:text-xs"
+                  class=" rounded-lg p-2 text-black placeholder:text-xs outline-none"
                   placeholder="Enter your email"
                 />
               </label>
@@ -130,7 +130,7 @@
                 <input
                   name="username"
                   type="text"
-                  class=" rounded-lg p-2 text-black placeholder:text-xs"
+                  class=" rounded-lg p-2 text-black placeholder:text-xs outline-none"
                   placeholder="Enter your username"
                 />
               </label>
@@ -139,7 +139,7 @@
                 <input
                   name="password"
                   type="password"
-                  class=" rounded-lg p-2 text-black placeholder:text-xs"
+                  class=" rounded-lg p-2 text-black placeholder:text-xs outline-none"
                   placeholder="Enter your password"
                 />
               </label>

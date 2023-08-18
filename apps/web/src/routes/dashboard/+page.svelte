@@ -1,33 +1,25 @@
 <script lang="ts">
   import { page } from "$app/stores";
+  import AvatarInput from "$lib/ui/AvatarInput.svelte";
+  import BackgroundInput from "$lib/ui/BackgroundInput.svelte";
+  import Input from "$lib/ui/input/Input.svelte";
   const user = $page.data.user;
 </script>
 
-<div class="h-full flex justify-center items-center mt-8 flex-col">
-  <div
-    class="border rounded-lg grid auto-rows-fr place-items-center gap-5 w-[400px] p-2"
-  >
-    <h2 class="font-bold text-2xl">
-      Your <span class="text-heading-primary"> Profile </span>
+<div class="h-full flex flex-col items-center p-4">
+  <div class="w-full max-w-xl flex flex-col gap-4">
+    <h2 class="font-bold text-text-primary text-sm">
+      <span class="font-normal text-text-secondary">Dashboard /</span>
+      {user?.username}
     </h2>
-    <div class="grid auto-rows-fr gap-4 w-full">
-      <label class="font-bold"
-        >Your profile name
-        <input
-          type="text"
-          class="outline-none caret-black py-2 px-2 rounded-lg text-black font-semibold w-full"
-          value={user?.username}
-          disabled={false}
-        />
-      </label>
-
-      <label class="font-bold">
-        Your email
-        <input
-          type="text"
-          class="outline-none caret-black py-2 px-2 rounded-lg text-black font-semibold w-full"
-        />
-      </label>
+    <div class="flex gap-4">
+      <AvatarInput />
+      <BackgroundInput />
     </div>
+    <!-- svelte-ignore a11y-label-has-associated-control -->
+    <label>
+      <h2 class="font-bold text-sm">Your Username</h2>
+      <Input value={user?.username} disabled={true} />
+    </label>
   </div>
 </div>

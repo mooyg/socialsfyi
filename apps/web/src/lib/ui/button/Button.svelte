@@ -22,8 +22,8 @@
   export { className as class };
   interface $$Props extends HTMLButtonAttributes, VariantProps<typeof button> {}
 
-  export let size: $$Props["size"] = "medium";
-  export let variant: $$Props["variant"] = "default";
+  export const size: $$Props["size"] = "medium";
+  export const variant: $$Props["variant"] = "default";
 </script>
 
 <button

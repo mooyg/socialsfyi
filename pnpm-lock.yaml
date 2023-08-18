@@ -102,6 +102,9 @@ importers:
       '@floating-ui/dom':
         specifier: ^1.5.1
         version: 1.5.1
+      '@socialsfyi/drizzle':
+        specifier: '*'
+        version: link:../../packages/drizzle
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
