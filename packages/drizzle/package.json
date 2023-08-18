@@ -1,0 +1,35 @@
+{
+  "name": "@socialsfyi/drizzle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "db:push": "drizzle-kit push:pg --config ./drizzle.config.ts",
+    "db:migrate": "drizzle-kit generate:pg --config ./drizzle.config.ts",
+    "db:migrate-apply": "tsx ./migrate.ts",
+    "db:studio": "drizzle-kit studio",
+    "preinstall": "tsc"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./schema": "./dist/schema/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.28.2",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@socialsfyi/tsconfig": "*",
+    "@types/pg": "^8.10.2",
+    "drizzle-kit": "^0.19.12",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  },
+  "files": [
+    "./dist/**/*.js"
+  ]
+}

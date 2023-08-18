@@ -1,0 +1,14 @@
+{
+  "extends": "@socialsfyi/tsconfig/tsconfig.base.json",
+  "exclude": ["drizzle.config.ts"],
+  "compilerOptions": {
+    "outDir": "dist/",
+    "moduleResolution": "node",
+    "declaration": true,
+    "sourceMap": true,
+    "rootDir": "./",
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "module": "commonjs"
+  }
+}

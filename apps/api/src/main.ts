@@ -1,28 +1,30 @@
-import "dotenv/config";
-export const ENV = serverEnvSchema.parse(process.env);
+import { config } from "dotenv";
+
+config({
+  path: "../../.env",
+});
 
 import { HttpAdapterHost, NestFactory } from "@nestjs/core";
-import { serverEnvSchema } from "@socialsfyi/schemas";
 import { AppModule } from "@socialsfyi/api/app.module";
 import session from "express-session";
 import passport from "passport";
-import { pool } from "./db/pool";
 import PG_SESSION from "connect-pg-simple";
 import { CommonExceptionsFilter } from "./filters/common-exceptions.filter";
+import { pool } from "@socialsfyi/drizzle";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
     cors: {
       credentials: true,
-      origin: ENV.CLIENT_URL,
+      origin: process.env.CLIENT_URL,
     },
   });
   app.setGlobalPrefix("api");
   const pgSession = PG_SESSION(session);
   app.use(
     session({
-      secret: ENV.SESSION_SECRET,
+      secret: process.env.SESSION_SECRET!,
       saveUninitialized: false,
       resave: false,
       cookie: {

@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "turbo dev",
-    "build:schema": "turbo build:schema",
     "db:migrate": "turbo run db:migrate",
     "db:push": "turbo run db:push",
     "db:migrate-apply": "turbo run db:migrate-apply",
