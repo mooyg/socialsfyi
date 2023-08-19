@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import AvatarInput from "$lib/ui/AvatarInput.svelte";
   import BackgroundInput from "$lib/ui/BackgroundInput.svelte";
@@ -7,7 +6,6 @@
   import Input from "$lib/ui/input/Input.svelte";
   import SocialTag from "$lib/ui/social-tag/SocialTag.svelte";
   import Textarea from "$lib/ui/textarea/Textarea.svelte";
-
   const user = $page.data.user;
 </script>
 

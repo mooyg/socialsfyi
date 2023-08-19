@@ -14,11 +14,9 @@ declare global {
         discordId: string;
         name: string;
       } | null;
-      pathname: string;
     }
     interface PageData {
       user: SelectUserSchema | null;
-      pathname: string;
     }
     // interface Platform {}
   }

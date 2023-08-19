@@ -16,7 +16,7 @@
     <h2 class="font-bold md:text-2xl">Let's start by creating your identity</h2>
     <div class="border p-4 rounded-lg flex gap-2">
       <VenetianMask />
-      <h2 class="font-bold text-xl">Your Identity</h2>
+      <a class="font-bold text-xl" href="/dashboard">Your Identity</a>
     </div>
   </div>
 </div>
