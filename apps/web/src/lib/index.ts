@@ -36,3 +36,7 @@ export const getUserFromCookie = async (
   const user = await res.json();
   return user;
 };
+
+export const capitaliseFirstLetter = (word: string) => {
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};

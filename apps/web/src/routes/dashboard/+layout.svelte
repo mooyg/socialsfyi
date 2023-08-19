@@ -15,7 +15,13 @@
     > mooy
   </h2>
   <div class="flex flex-row flex-wrap gap-2">
-    <a class="text-sm text-text-secondary" href="/dashboard/socials">Socials</a>
+    {#if currentPathname === "/dashboard"}
+      <a class="text-sm text-text-secondary" href="/dashboard/socials"
+        >Socials</a
+      >
+    {:else}
+      <a class="text-sm text-text-secondary" href="/dashboard">Dashboard</a>
+    {/if}
     <a class="text-sm text-text-secondary" href="/dashboard/settings"
       >Settings</a
     >

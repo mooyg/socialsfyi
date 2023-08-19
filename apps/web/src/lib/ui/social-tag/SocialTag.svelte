@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { socials } from "$lib";
+  import { capitaliseFirstLetter, socials } from "$lib";
   import type { Socials } from "@socialsfyi/drizzle";
   import { cva, type VariantProps } from "class-variance-authority";
   import { twMerge } from "tailwind-merge";
@@ -36,5 +36,5 @@
   href={link}
 >
   <svelte:component this={socials[socialType]} class="h-4 w-4" />
-  {socialType?.toLocaleUpperCase()}
+  {capitaliseFirstLetter(socialType)}
 </a>

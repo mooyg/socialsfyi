@@ -9,7 +9,7 @@
   const user = $page.data.user;
 </script>
 
-<div class="w-full max-w-xl flex flex-col gap-10 mt-5">
+<div class="w-full max-w-xl flex flex-col gap-8 mt-5">
   <div class="flex gap-4">
     <AvatarInput />
     <BackgroundInput />
