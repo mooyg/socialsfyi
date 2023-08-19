@@ -1,5 +1,4 @@
 import { SERVER_URL } from "$lib/constants.js";
-import { redirect } from "@sveltejs/kit";
 
 export const actions = {
   login: async ({ request }) => {

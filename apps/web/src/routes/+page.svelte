@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Button from "$lib/ui/button/Button.svelte";
-  import { LockIcon, PersonStanding, VenetianMask } from "lucide-svelte";
+  import { VenetianMask } from "lucide-svelte";
 </script>
 
 <div class="h-full flex items-center mt-8 flex-col">

@@ -1,5 +1,4 @@
 import { SERVER_URL } from "$lib/constants";
-import type { Handle } from "@sveltejs/kit";
 
 export const handle = async ({ event, resolve }) => {
   const cookie = event.cookies.get("socialsfyi-sid");
@@ -20,6 +19,9 @@ export const handle = async ({ event, resolve }) => {
     event.locals.user = null;
     return resolve(event);
   }
+
+  event.locals.pathname = event.url.pathname;
+
   const user = await res.json();
   event.locals.user = user;
   return resolve(event);

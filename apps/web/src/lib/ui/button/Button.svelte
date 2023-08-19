@@ -4,7 +4,7 @@
   import type { HTMLButtonAttributes } from "svelte/elements";
 
   const button = cva(
-    "inline-flex font-bold bg-button-primary rounded-lg justify-center items-center text-sm gap-2 hover:bg-opacity-75 transition-all delay-75",
+    "inline-flex font-bold bg-button-primary rounded-xl justify-center items-center text-sm gap-2 hover:bg-opacity-75 transition-all delay-75",
     {
       variants: {
         variant: {
@@ -22,8 +22,8 @@
   export { className as class };
   interface $$Props extends HTMLButtonAttributes, VariantProps<typeof button> {}
 
-  export const size: $$Props["size"] = "medium";
-  export const variant: $$Props["variant"] = "default";
+  export let size: $$Props["size"] = "medium";
+  export let variant: $$Props["variant"] = "default";
 </script>
 
 <button

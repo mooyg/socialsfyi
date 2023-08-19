@@ -21,3 +21,8 @@ export const drizzle = async () => {
 };
 export { InsertUserSchema, insertUserSchema } from "./inserts/user";
 export { SelectUserSchema, selectUserSchema } from "./selects/user";
+export {
+  selectProfileSchema,
+  Socials,
+  SelectProfileSchema,
+} from "./selects/profile";

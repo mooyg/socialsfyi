@@ -29,6 +29,13 @@ export default {
           800: "#CC4522",
           900: "#A5371B",
         },
+        socials: {
+          twitter: "#1D9BF0",
+          github: "#181717",
+          youtube: "#FF0000",
+          instagram: "#E4405F",
+          spotify: "#1DB954",
+        },
       },
     },
   },

@@ -5,7 +5,6 @@
   import { page } from "$app/stores";
   import Modal from "./ui/modal/Modal.svelte";
   import { SERVER_URL } from "./constants";
-  import { redirect } from "@sveltejs/kit";
   let showModal = false;
 
   let TAB: "register" | "login" = "login";

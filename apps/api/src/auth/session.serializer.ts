@@ -8,6 +8,8 @@ export class SessionSerializer extends PassportSerializer {
   constructor(private readonly _userService: UserService) {
     super();
   }
+
+  //TODO: Attach userId as a relation to the session
   serializeUser(user: User, done: Done) {
     return done(null, {
       email: user.email,
