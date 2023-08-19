@@ -6,6 +6,7 @@ import { AppService } from "@socialsfyi/api/app.service";
 import { AuthModule } from "@socialsfyi/api/auth/auth.module";
 import { UserModule } from "@socialsfyi/api/user/user.module";
 import { ZodValidationPipe } from "nestjs-zod";
+import { ProfileModule } from "./profile/profile.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -14,6 +15,7 @@ import { ZodValidationPipe } from "nestjs-zod";
 
     AuthModule,
     UserModule,
+    ProfileModule
   ],
   controllers: [AppController],
   providers: [

@@ -37,7 +37,7 @@
 </script>
 
 <header
-  class="flex items-center justify-between border-b-2 border-button-primary p-3"
+  class="flex items-center justify-between border-b-2 border-button-primary p-3 max-w-7xl mx-auto w-full"
 >
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->

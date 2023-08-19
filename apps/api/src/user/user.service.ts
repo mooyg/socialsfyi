@@ -1,12 +1,12 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, flatten } from "@nestjs/common";
 import { Drizzle } from "../types";
 import { DRIZZLE_ORM } from "../constants";
 import { eq } from "drizzle-orm";
 import { profile, user } from "@socialsfyi/drizzle/schema";
 import { InsertUserSchema } from "@socialsfyi/drizzle/inserts/user";
-import { SelectUserSchema } from "@socialsfyi/drizzle/selects/user";
 import { hash } from "bcrypt";
 import { EntityConflictException } from "../exceptions/entity-conflict.exception";
+import { SelectUserSchema } from "@socialsfyi/drizzle";
 @Injectable()
 export class UserService {
   constructor(@Inject(DRIZZLE_ORM) private readonly _drizzle: Drizzle) {}
@@ -24,6 +24,15 @@ export class UserService {
       },
     });
   }
+
+  async findWithProfile(id: string) {
+    return await this._drizzle.query.profile.findFirst({
+      where: eq(profile.userId, id),
+      with: {
+        user: true,
+      },
+    });
+  }
   async createUser({
     email,
     password,
@@ -32,23 +41,28 @@ export class UserService {
     const hashedPassword = await hash(password, 10);
 
     try {
-      // INSERTING THE USER
-      const { password: mypass, ...result } = (
-        await this._drizzle
-          .insert(user)
-          .values({
-            email,
-            password: hashedPassword,
-            username,
-          })
-          .returning()
-      )[0];
-      // CREATING A PROFILE FOR USER
-      await this._drizzle.insert(profile).values({
-        userId: result.id,
+      await this._drizzle.transaction(async (tx) => {
+        const { password, ...result } = (
+          await tx
+            .insert(user)
+            .values({
+              email,
+              password: hashedPassword,
+              username,
+            })
+            .returning()
+        )[0];
+        await tx.insert(profile).values({
+          userId: result.id,
+        });
       });
 
-      return result;
+      return await this._drizzle.query.user.findFirst({
+        where: eq(user.username, username),
+        columns: {
+          password: false,
+        },
+      });
     } catch (e) {
       throw new EntityConflictException();
     }

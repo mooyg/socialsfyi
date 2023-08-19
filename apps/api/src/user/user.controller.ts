@@ -10,4 +10,10 @@ export class UserController {
   async me(@Req() request: Request) {
     return await this._userService.findByUsername(request.user?.username);
   }
+
+  @Get("/me/profile")
+  @UseGuards(isAuthenticated)
+  async meProfile(@Req() request: Request) {
+    return await this._userService.findWithProfile(request.user?.id);
+  }
 }
