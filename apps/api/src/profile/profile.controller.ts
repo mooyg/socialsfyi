@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
 import { ProfileService } from "./profile.service";
 import { isAuthenticated } from "../guards/isAuthenticated";
 import { Request } from "express";
+import { UpdateDashboardDto } from "./dto/update-dashboard.dto";
 
 @Controller("profile")
 export class ProfileController {
@@ -14,7 +15,13 @@ export class ProfileController {
   }
 
   @Post("/update/dashboard")
-  async updateDashboard() {
-    return await this._profileService.updateDashboard();
+  async updateDashboard(
+    @Req() request: Request,
+    @Body() updateDashboard: UpdateDashboardDto
+  ) {
+    return await this._profileService.updateDashboard(
+      request.user!.id,
+      updateDashboard
+    );
   }
 }

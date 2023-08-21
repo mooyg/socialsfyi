@@ -9,7 +9,8 @@
     "db:migrate-apply": "tsx ./migrate.ts",
     "db:studio": "drizzle-kit studio",
     "preinstall": "tsc",
-    "build:schema": "tsc"
+    "build:schema": "tsc",
+    "dev:schema": "tsc-watch -p ./tsconfig.json"
   },
   "exports": {
     ".": "./dist/index.js",
@@ -29,6 +30,7 @@
     "@socialsfyi/tsconfig": "*",
     "@types/pg": "^8.10.2",
     "drizzle-kit": "^0.19.12",
+    "tsc-watch": "^6.0.4",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
   }

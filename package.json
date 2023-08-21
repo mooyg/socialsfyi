@@ -9,7 +9,8 @@
     "db:push": "turbo run db:push",
     "db:migrate-apply": "turbo run db:migrate-apply",
     "db:studio": "turbo run db:studio",
-    "build:schema": "turbo run build:schema"
+    "build:schema": "turbo run build:schema",
+    "dev:schema": "turbo run dev:schema"
   },
   "keywords": [],
   "author": "",

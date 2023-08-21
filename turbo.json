@@ -20,10 +20,13 @@
     "build:schema": {
       "cache": false
     },
+    "dev:schema": {
+      "cache": false
+    },
     "dev": {
       "cache": false,
       "persistent": true,
-      "dependsOn": ["db:migrate-apply", "build:schema"]
+      "dependsOn": ["db:migrate-apply", "dev:schema"]
     }
   }
 }

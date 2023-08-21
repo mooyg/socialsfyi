@@ -26,3 +26,7 @@ export {
   Socials,
   SelectProfileSchema,
 } from "./selects/profile";
+export {
+  updateDashboardSchema,
+  UpdateDashboardSchema,
+} from "./inserts/profile";
