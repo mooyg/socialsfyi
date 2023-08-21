@@ -23,5 +23,6 @@
     "build",
     ".turbo",
     "drizzle.config.ts"
-  ]
+  ],
+  "include": ["../../env.d.ts", "./src/**/*"]
 }
