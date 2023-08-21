@@ -1,4 +1,4 @@
-import { Inject, Injectable, flatten } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { Drizzle } from "../types";
 import { DRIZZLE_ORM } from "../constants";
 import { eq } from "drizzle-orm";
@@ -25,14 +25,6 @@ export class UserService {
     });
   }
 
-  async findWithProfile(id: string) {
-    return await this._drizzle.query.profile.findFirst({
-      where: eq(profile.userId, id),
-      with: {
-        user: true,
-      },
-    });
-  }
   async createUser({
     email,
     password,
@@ -57,12 +49,13 @@ export class UserService {
         });
       });
 
-      return await this._drizzle.query.user.findFirst({
+      const createdUser = await this._drizzle.query.user.findFirst({
         where: eq(user.username, username),
         columns: {
           password: false,
         },
       });
+      return createdUser!;
     } catch (e) {
       throw new EntityConflictException();
     }

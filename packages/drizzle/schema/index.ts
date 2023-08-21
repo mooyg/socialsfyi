@@ -1,3 +1,3 @@
-export { user } from "./user";
-export { profile, socialEnum, profileRelation } from "./profile";
+export { user, userRelations } from "./user";
+export { profile, socialEnum } from "./profile";
 export { sessions } from "./sessions";

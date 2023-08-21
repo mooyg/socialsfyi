@@ -1,5 +1,6 @@
 import { pgTable, uuid, varchar } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
+import { profile } from "./profile";
 
 export const user = pgTable("user", {
   id: uuid("id")
@@ -9,3 +10,10 @@ export const user = pgTable("user", {
   email: varchar("email").notNull().unique(),
   password: varchar("password").notNull(),
 });
+
+export const userRelations = relations(user, ({ one }) => ({
+  profile: one(profile, {
+    fields: [user.id],
+    references: [profile.userId],
+  }),
+}));

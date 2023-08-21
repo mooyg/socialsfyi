@@ -1,5 +1,5 @@
 import { pgEnum, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
-import { relations, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { user } from "./user";
 
 export const socialEnum = pgEnum("socials", [
@@ -24,10 +24,3 @@ export const profile = pgTable("profile", {
     .notNull()
     .references(() => user.id),
 });
-
-export const profileRelation = relations(profile, ({ one }) => ({
-  user: one(user, {
-    fields: [profile.id],
-    references: [user.id],
-  }),
-}));
