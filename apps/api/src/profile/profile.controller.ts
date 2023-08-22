@@ -19,9 +19,10 @@ export class ProfileController {
     @Req() request: Request,
     @Body() updateDashboard: UpdateDashboardDto
   ) {
-    return await this._profileService.updateDashboard(
-      request.user!.id,
-      updateDashboard
-    );
+    console.log(request);
+    // return await this._profileService.updateDashboard(
+    //   request.user!.id,
+    //   updateDashboard
+    // );
   }
 }

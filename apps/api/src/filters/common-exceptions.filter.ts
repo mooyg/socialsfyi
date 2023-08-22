@@ -7,6 +7,7 @@ import {
 import { BaseExceptionFilter } from "@nestjs/core";
 import { EntityNotFoundException } from "../exceptions/entity-not-found.exception";
 import { EntityConflictException } from "../exceptions/entity-conflict.exception";
+import { InvalidEntityException } from "../exceptions/invalid-entity.exception";
 
 export class CommonExceptionsFilter
   extends BaseExceptionFilter
@@ -18,6 +19,9 @@ export class CommonExceptionsFilter
         return super.catch(new NotFoundException(exception.message), host);
       }
       case exception instanceof EntityConflictException: {
+        return super.catch(new ConflictException(exception.message), host);
+      }
+      case exception instanceof InvalidEntityException: {
         return super.catch(new ConflictException(exception.message), host);
       }
       default: {

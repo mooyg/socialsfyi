@@ -1,6 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { S3_CLIENT } from "./client";
 import { PutObjectCommand, S3 } from "@aws-sdk/client-s3";
+import { v4 as uuidv4 } from "uuid";
+import { InvalidEntityException } from "../exceptions/invalid-entity.exception";
 
 @Injectable()
 export class UploadService {
@@ -8,17 +10,24 @@ export class UploadService {
 
   async uploadFile(file: Express.Multer.File) {
     try {
-      const data = await this._s3Client.send(
+      if (file.mimetype !== "image/png" && file.mimetype !== "image/jpeg") {
+        throw new InvalidEntityException("The file type is invalid");
+      }
+      const filename = `${uuidv4()}.png`;
+      await this._s3Client.send(
         new PutObjectCommand({
           Body: file.buffer,
-          Key: `${Date.now()}-${file.originalname}.png`,
+          Key: filename,
           Bucket: "socials-fyi",
           ACL: "public-read",
         })
       );
-      console.log(data);
+      return {
+        url: `${process.env.OBJECT_STORAGE_ENDPOINT}socials-fyi/${filename}`,
+        filename,
+      };
     } catch (e) {
-      console.error(e);
+      throw new Error("Something happened while uploading the file");
     }
   }
 }
