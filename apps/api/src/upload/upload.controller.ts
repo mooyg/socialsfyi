@@ -1,12 +1,19 @@
-import { Controller, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
-import { FileInterceptor } from "@nestjs/platform-express"
+import { Controller, Post } from "@nestjs/common";
 import { UploadService } from "./upload.service";
-@Controller('upload')
+import { FormData } from "../decorators/form-data.decorator";
+import { FormidableReturnType } from "../types";
+@Controller("upload")
 export class UploadController {
-  constructor(private readonly _uploadService: UploadService) { }
-  @Post("")
-  @UseInterceptors(FileInterceptor("file"))
-  async upload(@UploadedFile() file: Express.Multer.File) {
-    return await this._uploadService.uploadFile(file)
+  constructor(private readonly _uploadService: UploadService) {}
+  @Post("/")
+  async upload(
+    @FormData({
+      maxFiles: 1,
+    })
+    formData: FormidableReturnType
+  ) {
+    const { files } = formData;
+
+    return this._uploadService.uploadFile(files.file[0]);
   }
 }
