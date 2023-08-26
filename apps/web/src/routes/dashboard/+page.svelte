@@ -8,6 +8,11 @@
   import Textarea from "$lib/ui/textarea/Textarea.svelte";
 
   const user = $page.data.user;
+  let bio: string;
+
+  const handleSaveDashboard = () => {
+    console.log(bio);
+  };
 </script>
 
 <div class="w-full max-w-xl flex flex-col gap-8 mt-5">
@@ -23,8 +28,8 @@
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label>
     <h2 class="font-bold text-sm">Your bio</h2>
-
     <Textarea
+      bind:value={bio}
       variant="outline"
       placeholder="Write something about yourself here"
     />
@@ -43,5 +48,5 @@
       </div>
     </div>
   </div>
-  <Button>Save Changes</Button>
+  <Button on:click={handleSaveDashboard}>Save Changes</Button>
 </div>

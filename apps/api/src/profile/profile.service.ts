@@ -31,7 +31,7 @@ export class ProfileService {
   }
 
   async updateDashboard(userId: string, updateDashboard: UpdateDashboardDto) {
-    const userProfile = await this._drizzle.query.user.findFirst({
+    const existingUser = await this._drizzle.query.user.findFirst({
       where: eq(user.id, userId),
       with: {
         profile: true,
@@ -40,7 +40,7 @@ export class ProfileService {
         password: false,
       },
     });
-    if (!userProfile) {
+    if (!existingUser) {
       throw new EntityNotFoundException();
     }
 
@@ -49,6 +49,7 @@ export class ProfileService {
       .set({
         ...updateDashboard,
       })
+      .where(eq(profile.id, existingUser.profile.id))
       .returning();
   }
 }

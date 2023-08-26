@@ -6,4 +6,9 @@ export const selectProfileSchema = createSelectSchema(profile);
 
 export type SelectProfileSchema = z.infer<typeof selectProfileSchema>;
 
-export type Socials = Exclude<SelectProfileSchema["socials"], null>;
+export type Socials =
+  | "github"
+  | "twitter"
+  | "instagram"
+  | "youtube"
+  | "spotify";

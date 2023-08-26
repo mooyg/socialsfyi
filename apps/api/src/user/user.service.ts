@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Drizzle } from "../types";
 import { DRIZZLE_ORM } from "../constants";
 import { eq } from "drizzle-orm";
-import { profile, user } from "@socialsfyi/drizzle/schema";
+import { profile, socials, user } from "@socialsfyi/drizzle/schema";
 import { InsertUserSchema } from "@socialsfyi/drizzle/inserts/user";
 import { hash } from "bcrypt";
 import { EntityConflictException } from "../exceptions/entity-conflict.exception";
@@ -34,7 +34,7 @@ export class UserService {
 
     try {
       await this._drizzle.transaction(async (tx) => {
-        const { password, ...result } = (
+        const { password, ...createdUser } = (
           await tx
             .insert(user)
             .values({
@@ -44,8 +44,14 @@ export class UserService {
             })
             .returning()
         )[0];
-        await tx.insert(profile).values({
-          userId: result.id,
+        const createdProfile = await tx
+          .insert(profile)
+          .values({
+            userId: createdUser.id,
+          })
+          .returning();
+        await tx.insert(socials).values({
+          profileId: createdProfile[0].id,
         });
       });
 

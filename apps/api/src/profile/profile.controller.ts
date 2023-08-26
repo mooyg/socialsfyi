@@ -15,11 +15,11 @@ export class ProfileController {
   }
 
   @Post("/update/dashboard")
+  @UseGuards(isAuthenticated)
   async updateDashboard(
     @Req() request: Request,
     @Body() updateDashboard: UpdateDashboardDto
   ) {
-    console.log(request);
     return await this._profileService.updateDashboard(
       request.user!.id,
       updateDashboard

@@ -19,8 +19,11 @@
 
   interface $$Props
     extends HTMLTextareaAttributes,
-      VariantProps<typeof textarea> {}
+      VariantProps<typeof textarea> {
+    value?: string;
+  }
   export let variant: $$Props["variant"] = "default";
+  export let value: $$Props["value"] = "";
 </script>
 
 <textarea
@@ -31,4 +34,5 @@
       variant,
     }),
   )}
+  bind:value
 />
