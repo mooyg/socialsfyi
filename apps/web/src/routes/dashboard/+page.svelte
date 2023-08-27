@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
+  import { notifications } from "$lib/stores/notification";
   import AvatarInput from "$lib/ui/AvatarInput.svelte";
   import BackgroundInput from "$lib/ui/BackgroundInput.svelte";
   import Button from "$lib/ui/button/Button.svelte";
@@ -9,10 +10,7 @@
 
   const user = $page.data.user;
   let bio: string;
-
-  const handleSaveDashboard = () => {
-    console.log(bio);
-  };
+  const handleSaveDashboard = () => {};
 </script>
 
 <div class="w-full max-w-xl flex flex-col gap-8 mt-5">

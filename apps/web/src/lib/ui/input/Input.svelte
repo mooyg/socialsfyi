@@ -16,8 +16,11 @@
     },
   );
   export { className as class };
-  interface $$Props extends HTMLInputAttributes, VariantProps<typeof input> {}
+  interface $$Props extends HTMLInputAttributes, VariantProps<typeof input> {
+    value?: string;
+  }
   export let variant: $$Props["variant"] = "default";
+  export let value: $$Props["value"] = "";
 </script>
 
 <input
@@ -28,4 +31,5 @@
       variant,
     }),
   )}
+  bind:value
 />

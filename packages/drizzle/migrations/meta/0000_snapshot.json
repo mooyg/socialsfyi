@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "3500c770-e802-4a93-856b-d2c76d3b897f",
+  "id": "faa275c1-161f-4dcf-8e19-520635620a15",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "profile": {
@@ -14,12 +14,6 @@
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
-        },
-        "socials": {
-          "name": "socials",
-          "type": "socials",
-          "primaryKey": false,
-          "notNull": false
         },
         "avatar": {
           "name": "avatar",
@@ -93,6 +87,73 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "socials": {
+      "name": "socials",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "github": {
+          "name": "github",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "twitter": {
+          "name": "twitter",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "instagram": {
+          "name": "instagram",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "youtube": {
+          "name": "youtube",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "spotify": {
+          "name": "spotify",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "profile_id": {
+          "name": "profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "socials_profile_id_profile_id_fk": {
+          "name": "socials_profile_id_profile_id_fk",
+          "tableFrom": "socials",
+          "tableTo": "profile",
+          "columnsFrom": [
+            "profile_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "user": {
       "name": "user",
       "schema": "",
@@ -144,18 +205,7 @@
       }
     }
   },
-  "enums": {
-    "socials": {
-      "name": "socials",
-      "values": {
-        "twitter": "twitter",
-        "youtube": "youtube",
-        "instagram": "instagram",
-        "github": "github",
-        "spotify": "spotify"
-      }
-    }
-  },
+  "enums": {},
   "schemas": {},
   "_meta": {
     "schemas": {},
