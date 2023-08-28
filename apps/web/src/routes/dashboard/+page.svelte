@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { notifications } from "$lib/stores/notification";
+  import { SERVER_URL } from "$lib/constants";
   import AvatarInput from "$lib/ui/AvatarInput.svelte";
   import BackgroundInput from "$lib/ui/BackgroundInput.svelte";
   import Button from "$lib/ui/button/Button.svelte";
@@ -8,15 +8,33 @@
   import SocialTag from "$lib/ui/social-tag/SocialTag.svelte";
   import Textarea from "$lib/ui/textarea/Textarea.svelte";
 
-  const user = $page.data.user;
-  let bio: string;
-  const handleSaveDashboard = () => {};
+  const user = $page.data.userWithProfile;
+
+  const dashboard = {
+    bio: user?.profile.bio,
+    avatarURL: user?.profile.avatarURL,
+    backgroundURL: user?.profile.backgroundURL,
+  };
+
+  const handleSaveDashboard = () => {
+    console.log(dashboard);
+    fetch(`${SERVER_URL}/api/profile/update/dashboard`, {
+      method: "POST",
+      body: JSON.stringify({
+        ...dashboard,
+      }),
+      credentials: "include",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+  };
 </script>
 
 <div class="w-full max-w-xl flex flex-col gap-8 mt-5">
-  <div class="flex gap-4">
-    <AvatarInput />
-    <BackgroundInput />
+  <div class=" gap-2 grid grid-cols-2">
+    <AvatarInput bind:avatarURL={dashboard.avatarURL} />
+    <BackgroundInput bind:backgroundURL={dashboard.backgroundURL} />
   </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label>
@@ -27,8 +45,9 @@
   <label>
     <h2 class="font-bold text-sm">Your bio</h2>
     <Textarea
-      bind:value={bio}
+      bind:value={dashboard.bio}
       variant="outline"
+      class="text-sm"
       placeholder="Write something about yourself here"
     />
   </label>

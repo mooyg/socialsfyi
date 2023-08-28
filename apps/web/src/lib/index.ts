@@ -37,6 +37,24 @@ export const getUserFromCookie = async (
   return user;
 };
 
+export const getUserWithProfile = async (cookie: string | undefined) => {
+  if (!cookie) {
+    return null;
+  }
+  const res = await fetch(`${SERVER_URL}/api/profile/me`, {
+    method: "GET",
+    headers: {
+      Cookie: `socialsfyi-sid=${cookie};`,
+      "Content-type": "application/json",
+    },
+  });
+  if (!res.ok) {
+    return null;
+  }
+  const userProfile = await res.json();
+  return userProfile;
+};
+
 export const capitaliseFirstLetter = (word: string) => {
   return word.charAt(0).toUpperCase() + word.slice(1);
 };

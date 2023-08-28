@@ -20,10 +20,10 @@
   interface $$Props
     extends HTMLTextareaAttributes,
       VariantProps<typeof textarea> {
-    value?: string;
+    value?: string | null | undefined;
   }
   export let variant: $$Props["variant"] = "default";
-  export let value: $$Props["value"] = "";
+  export let value: $$Props["value"] | null | undefined;
 </script>
 
 <textarea

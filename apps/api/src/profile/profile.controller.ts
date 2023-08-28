@@ -20,6 +20,7 @@ export class ProfileController {
     @Req() request: Request,
     @Body() updateDashboard: UpdateDashboardDto
   ) {
+    console.log(updateDashboard);
     return await this._profileService.updateDashboard(
       request.user!.id,
       updateDashboard

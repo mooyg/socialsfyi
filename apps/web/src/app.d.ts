@@ -1,6 +1,9 @@
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
-import type { SelectUserSchema } from "@socialsfyi/drizzle";
+import type {
+  SelectProfileSchema,
+  SelectUserSchema,
+} from "@socialsfyi/drizzle";
 
 declare global {
   namespace App {
@@ -17,6 +20,11 @@ declare global {
     }
     interface PageData {
       user: SelectUserSchema | null;
+      userWithProfile:
+        | (SelectUserSchema & {
+            profile: SelectProfileSchema;
+          })
+        | null;
     }
     // interface Platform {}
   }
