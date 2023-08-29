@@ -8,12 +8,13 @@
   import SocialTag from "$lib/ui/social-tag/SocialTag.svelte";
   import Textarea from "$lib/ui/textarea/Textarea.svelte";
 
-  const user = $page.data.userWithProfile;
+  const userProfile = $page.data.userProfile;
+  const user = $page.data.user;
 
   const dashboard = {
-    bio: user?.profile.bio,
-    avatarURL: user?.profile.avatarURL,
-    backgroundURL: user?.profile.backgroundURL,
+    bio: userProfile.bio,
+    avatarURL: userProfile.avatarURL,
+    backgroundURL: userProfile.backgroundURL,
   };
 
   const handleSaveDashboard = () => {

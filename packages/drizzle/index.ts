@@ -19,14 +19,23 @@ export const drizzle = async () => {
     logger: true,
   });
 };
-export { InsertUserSchema, insertUserSchema } from "./inserts/user";
+
 export { SelectUserSchema, selectUserSchema } from "./selects/user";
 export {
   selectProfileSchema,
-  Socials,
   SelectProfileSchema,
+  SelectProfileWithSocialSchema,
+  selectProfileWithSocialSchema,
 } from "./selects/profile";
+export {
+  SelectSocialsSchema,
+  selectSocialsSchema,
+  allSocials,
+} from "./selects/socials";
+
+export { InsertUserSchema, insertUserSchema } from "./inserts/user";
 export {
   updateDashboardSchema,
   UpdateDashboardSchema,
 } from "./inserts/profile";
+export { UpdateSocialsSchema, updateSocialsSchema } from "./inserts/socials";

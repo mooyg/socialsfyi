@@ -2,6 +2,8 @@
 // for information about these interfaces
 import type {
   SelectProfileSchema,
+  SelectProfileWithSocialSchema,
+  SelectSocialsSchema,
   SelectUserSchema,
 } from "@socialsfyi/drizzle";
 
@@ -20,11 +22,7 @@ declare global {
     }
     interface PageData {
       user: SelectUserSchema | null;
-      userWithProfile:
-        | (SelectUserSchema & {
-            profile: SelectProfileSchema;
-          })
-        | null;
+      userProfile: SelectProfileWithSocialSchema;
     }
     // interface Platform {}
   }

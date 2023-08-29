@@ -3,6 +3,7 @@ import { ProfileService } from "./profile.service";
 import { isAuthenticated } from "../guards/isAuthenticated";
 import { Request } from "express";
 import { UpdateDashboardDto } from "./dto/update-dashboard.dto";
+import { UpdateSocialsDto } from "./dto/update-socials.dto";
 
 @Controller("profile")
 export class ProfileController {
@@ -24,6 +25,18 @@ export class ProfileController {
     return await this._profileService.updateDashboard(
       request.user!.id,
       updateDashboard
+    );
+  }
+
+  @Post("/update/socials")
+  @UseGuards(isAuthenticated)
+  async updateSocials(
+    @Req() request: Request,
+    @Body() updateSocials: UpdateSocialsDto
+  ) {
+    return await this._profileService.updateSocials(
+      request.user.id,
+      updateSocials
     );
   }
 }

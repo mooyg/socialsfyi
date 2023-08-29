@@ -1,6 +1,5 @@
 <script>
-  // @ts-nocheck
-
+  import { page } from "$app/stores";
   import { capitaliseFirstLetter, socials } from "$lib";
   import Button from "$lib/ui/button/Button.svelte";
   import Input from "$lib/ui/input/Input.svelte";
@@ -9,19 +8,19 @@
 
 <div class="w-full max-w-xl flex flex-col gap-8 mt-5">
   <h2 class="font-bold text-xl">SOCIALS</h2>
-  <div class="flex flex-row flex-wrap gap-4">
+  <div class="grid grid-cols-3 gap-4">
     {#each Object.keys(socials) as social}
-      <div class="flex flex-row justify-center items-center gap-1">
+      <div class="flex flex-col">
         <SocialIcons
-          width="32"
-          height="32"
+          width={32}
           fgColor="#eeeeee"
           bgColor="#111111"
           network={social}
           alt={social}
         />
         <Input
-          class="w-fit p-1 rounded-md placeholder:text-xs placeholder:font-bold text-sm text-text-primary"
+          value={$page.data.userProfile.socials[social]}
+          class="w-fit p-2 rounded-md placeholder:text-xs placeholder:font-bold text-xs text-text-primary"
           variant="outline"
           placeholder={capitaliseFirstLetter(social)}
         />

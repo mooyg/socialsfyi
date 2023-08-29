@@ -1,21 +1,18 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { DRIZZLE_ORM } from "../constants";
 import { Drizzle } from "../types";
-import { eq } from "drizzle-orm";
-import { profile, user } from "@socialsfyi/drizzle/schema";
+import { profile, socials, user } from "@socialsfyi/drizzle/schema";
 import { EntityNotFoundException } from "../exceptions/entity-not-found.exception";
 import { UpdateDashboardDto } from "./dto/update-dashboard.dto";
-import { UploadService } from "../upload/upload.service";
+import { UpdateSocialsDto } from "./dto/update-socials.dto";
+import { eq } from "drizzle-orm";
 
 @Injectable()
 export class ProfileService {
-  constructor(
-    @Inject(DRIZZLE_ORM) private readonly _drizzle: Drizzle,
-    private readonly _upload: UploadService
-  ) {}
+  constructor(@Inject(DRIZZLE_ORM) private readonly _drizzle: Drizzle) {}
 
   async findProfileByUserId(userId: string) {
-    const userProfile = await this._drizzle.query.user.findFirst({
+    const existingUser = await this._drizzle.query.user.findFirst({
       where: eq(user.id, userId),
       with: {
         profile: true,
@@ -24,9 +21,17 @@ export class ProfileService {
         password: false,
       },
     });
-    if (!userProfile) {
+
+    if (!existingUser) {
       throw new EntityNotFoundException();
     }
+    const userProfile = await this._drizzle.query.profile.findFirst({
+      where: eq(profile.id, existingUser.profile.id),
+      with: {
+        socials: true,
+      },
+    });
+
     return userProfile;
   }
 
@@ -44,12 +49,46 @@ export class ProfileService {
       throw new EntityNotFoundException();
     }
 
-    return await this._drizzle
-      .update(profile)
-      .set({
-        ...updateDashboard,
-      })
-      .where(eq(profile.id, existingUser.profile.id))
-      .returning();
+    return (
+      await this._drizzle
+        .update(profile)
+        .set(updateDashboard)
+        .where(eq(profile.id, existingUser.profile.id))
+        .returning()
+    )[0];
+  }
+
+  async updateSocials(userId: string, updateSocials: UpdateSocialsDto) {
+    console.log(updateSocials);
+    const exisitingUser = await this._drizzle.query.user.findFirst({
+      where: eq(user.id, userId),
+      columns: {
+        password: false,
+      },
+      with: {
+        profile: true,
+      },
+    });
+    if (!exisitingUser) {
+      throw new EntityNotFoundException();
+    }
+
+    const userProfile = await this._drizzle.query.profile.findFirst({
+      where: eq(profile.id, exisitingUser.profile.id),
+      with: {
+        socials: true,
+      },
+    });
+    if (!userProfile) {
+      throw new EntityNotFoundException();
+    }
+
+    return (
+      await this._drizzle
+        .update(socials)
+        .set(updateSocials)
+        .where(eq(socials.id, userProfile.socials.id))
+        .returning()
+    )[0];
   }
 }
