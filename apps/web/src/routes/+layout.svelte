@@ -4,7 +4,7 @@
   import Toast from "$lib/ui/toast/Toast.svelte";
 </script>
 
-<div class="flex flex-col h-screen">
+<div class="flex flex-col min-h-screen">
   <Header />
   <slot />
   <Toast />

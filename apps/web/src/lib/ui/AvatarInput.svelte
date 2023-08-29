@@ -31,11 +31,19 @@
 
 {#if avatarURL}
   <div class="relative">
-    <Button on:click={() => (avatarURL = "")} class="absolute text-red-600 m-2">
-      <TrashIcon size={16} />
+    <Button
+      on:click={() => (avatarURL = "")}
+      class="absolute text-red-600 m-2 text-[10px] hover:none"
+    >
+      <TrashIcon size={10} />
       Remove</Button
     >
-    <img src={avatarURL} alt="avatar" class="rounded-md max-h-[300px]" />
+    <img
+      loading="eager"
+      src={avatarURL}
+      alt="avatar"
+      class="rounded-md h-[300px] w-full"
+    />
   </div>
 {:else}
   <label for="avatar-input" class="flex flex-col gap-1">

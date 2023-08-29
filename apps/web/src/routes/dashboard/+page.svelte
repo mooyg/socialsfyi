@@ -20,9 +20,7 @@
     console.log(dashboard);
     fetch(`${SERVER_URL}/api/profile/update/dashboard`, {
       method: "POST",
-      body: JSON.stringify({
-        ...dashboard,
-      }),
+      body: JSON.stringify(dashboard),
       credentials: "include",
       headers: {
         "Content-type": "application/json",
@@ -32,7 +30,7 @@
 </script>
 
 <div class="w-full max-w-xl flex flex-col gap-8 mt-5">
-  <div class=" gap-2 grid grid-cols-2">
+  <div class="gap-4 grid grid-cols-2">
     <AvatarInput bind:avatarURL={dashboard.avatarURL} />
     <BackgroundInput bind:backgroundURL={dashboard.backgroundURL} />
   </div>

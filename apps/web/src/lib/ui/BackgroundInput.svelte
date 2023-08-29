@@ -33,12 +33,17 @@
   <div class="relative">
     <Button
       on:click={() => (backgroundURL = "")}
-      class="absolute text-red-600 m-2"
+      class="absolute text-red-600 m-2 text-[10px] hover:none"
     >
       <TrashIcon size={16} />
-      Remove</Button
-    >
-    <img src={backgroundURL} alt="avatar" class="rounded-md max-h-[300px]" />
+      Remove
+    </Button>
+    <img
+      loading="eager"
+      src={backgroundURL}
+      alt="avatar"
+      class="rounded-md h-[300px] w-full"
+    />
   </div>
 {:else}
   <label for="background-input" class="flex flex-col gap-1">
