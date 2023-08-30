@@ -1,6 +1,7 @@
 <script lang="ts">
   import { afterNavigate } from "$app/navigation";
-  import { page } from "$app/stores";
+  import Header from "$lib/Header.svelte";
+  import Toast from "$lib/ui/toast/Toast.svelte";
 
   let currentPathname: string = "Dashboard";
   afterNavigate((navigate) => {

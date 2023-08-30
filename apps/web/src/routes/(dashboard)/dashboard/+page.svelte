@@ -8,17 +8,15 @@
   import SocialTag from "$lib/ui/social-tag/SocialTag.svelte";
   import Textarea from "$lib/ui/textarea/Textarea.svelte";
 
-  const userProfile = $page.data.userProfile;
-  const user = $page.data.user;
+  const userWithProfile = $page.data.userWithProfile;
 
   const dashboard = {
-    bio: userProfile.bio,
-    avatarURL: userProfile.avatarURL,
-    backgroundURL: userProfile.backgroundURL,
+    bio: userWithProfile.profile.bio,
+    avatarURL: userWithProfile.profile.avatarURL,
+    backgroundURL: userWithProfile.profile.backgroundURL,
   };
 
   const handleSaveDashboard = () => {
-    console.log(dashboard);
     fetch(`${SERVER_URL}/api/profile/update/dashboard`, {
       method: "POST",
       body: JSON.stringify(dashboard),
@@ -38,7 +36,11 @@
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label>
     <h2 class="font-bold text-sm">Your username</h2>
-    <Input variant="outline" value={user?.username} disabled={true} />
+    <Input
+      variant="outline"
+      value={userWithProfile?.username}
+      disabled={true}
+    />
   </label>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label>

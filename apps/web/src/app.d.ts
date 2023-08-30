@@ -22,7 +22,9 @@ declare global {
     }
     interface PageData {
       user: SelectUserSchema | null;
-      userProfile: SelectProfileWithSocialSchema;
+      userWithProfile: SelectUserSchema & {
+        profile: SelectProfileWithSocialSchema;
+      };
     }
     // interface Platform {}
   }

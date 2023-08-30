@@ -11,11 +11,35 @@ import { eq } from "drizzle-orm";
 export class ProfileService {
   constructor(@Inject(DRIZZLE_ORM) private readonly _drizzle: Drizzle) {}
 
+  async findByProfileUsername(username: string) {
+    const existingUser = await this._drizzle.query.user.findFirst({
+      where: eq(user.username, username),
+      with: {
+        profile: {
+          with: {
+            socials: true,
+          },
+        },
+      },
+      columns: {
+        password: false,
+      },
+    });
+    if (!existingUser) {
+      throw new EntityNotFoundException();
+    }
+    return existingUser;
+  }
+
   async findProfileByUserId(userId: string) {
     const existingUser = await this._drizzle.query.user.findFirst({
       where: eq(user.id, userId),
       with: {
-        profile: true,
+        profile: {
+          with: {
+            socials: true,
+          },
+        },
       },
       columns: {
         password: false,
@@ -25,14 +49,8 @@ export class ProfileService {
     if (!existingUser) {
       throw new EntityNotFoundException();
     }
-    const userProfile = await this._drizzle.query.profile.findFirst({
-      where: eq(profile.id, existingUser.profile.id),
-      with: {
-        socials: true,
-      },
-    });
 
-    return userProfile;
+    return existingUser;
   }
 
   async updateDashboard(userId: string, updateDashboard: UpdateDashboardDto) {

@@ -6,18 +6,14 @@ import type {
 import { error, redirect } from "@sveltejs/kit";
 
 export const load = async ({ cookies, parent }) => {
-  const userProfile: SelectProfileWithSocialSchema = await getUserWithProfile(
-    cookies.get("socialsfyi-sid"),
-  );
-  const user: SelectUserSchema | null = await getUserFromCookie(
-    cookies.get("socialsfyi-sid"),
-  );
+  const userWithProfile: SelectUserSchema & {
+    profile: SelectProfileWithSocialSchema;
+  } = await getUserWithProfile(cookies.get("socialsfyi-sid"));
 
-  if (!user) {
+  if (!userWithProfile) {
     throw redirect(307, "/");
   }
   return {
-    userProfile,
-    user,
+    userWithProfile,
   };
 };
