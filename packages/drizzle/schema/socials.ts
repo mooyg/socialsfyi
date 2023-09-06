@@ -15,3 +15,13 @@ export const socials = pgTable("socials", {
     .references(() => profile.id)
     .notNull(),
 });
+
+export const allSocials = [
+  "github",
+  "twitter",
+  "instagram",
+  "youtube",
+  "spotify",
+] as const;
+
+export type Socials = (typeof allSocials)[number];
